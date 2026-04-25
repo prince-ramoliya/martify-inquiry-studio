@@ -1,4 +1,5 @@
 import { Hero } from "@/components/Hero";
+import { OfferBanner } from "@/components/OfferBanner";
 import { Categories } from "@/components/Categories";
 import { FeaturedProducts } from "@/components/FeaturedProducts";
 import { WhyChoose } from "@/components/WhyChoose";
@@ -13,6 +14,7 @@ const Index = () => (
       description="Curated supermarket from Surat — beauty, kitchen, decor, electronics, stationary, toys. Browse, save & inquire on WhatsApp."
     />
     <Hero />
+    <OfferBanner />
     <Categories />
     <FeaturedProducts />
     <WhyChoose />
