@@ -1,19 +1,19 @@
 import { Facebook, Instagram, Mail, MapPin, MessageCircle, Phone, Twitter, Youtube } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Logo } from "./Logo";
 import { Button } from "./ui/button";
 import { WHATSAPP_NUMBER, buildWhatsAppLink, categories } from "@/data/products";
 
 export const Footer = () => {
   return (
-    <footer id="contact" className="bg-gradient-dark text-primary-foreground relative overflow-hidden">
+    <footer className="bg-gradient-dark text-primary-foreground relative overflow-hidden">
       <div className="absolute -top-40 -right-40 w-96 h-96 bg-primary-glow/20 rounded-full blur-3xl" aria-hidden />
       <div className="container-page relative pt-20 pb-10">
         <div className="grid lg:grid-cols-12 gap-12 mb-14">
-          {/* Brand */}
           <div className="lg:col-span-4">
             <Logo variant="light" />
             <p className="mt-6 text-primary-foreground/70 leading-relaxed max-w-sm">
-              MARTIFY is your one-stop premium supermarket — curated products, smart prices, instant WhatsApp support.
+              MARTIFY is a Surat-based premium supermarket — curated products, smart prices, instant WhatsApp support.
             </p>
             <a
               href={buildWhatsAppLink("Hello MARTIFY, I'd like to know more about your products.")}
@@ -34,29 +34,33 @@ export const Footer = () => {
             </div>
           </div>
 
-          {/* Quick Links */}
           <div className="lg:col-span-2">
-            <h4 className="font-display font-bold text-base mb-5">Quick Links</h4>
+            <h4 className="font-display font-bold text-base mb-5">Explore</h4>
             <ul className="space-y-3 text-sm text-primary-foreground/70">
-              {["Home", "Shop", "About", "Contact", "FAQ", "Wishlist"].map((l) => (
-                <li key={l}><a href="#" className="hover:text-primary-foreground transition-smooth">{l}</a></li>
+              {[
+                { l: "Home", to: "/" },
+                { l: "Shop", to: "/shop" },
+                { l: "About", to: "/about" },
+                { l: "Contact", to: "/contact" },
+                { l: "FAQ", to: "/faq" },
+                { l: "Wishlist", to: "/wishlist" },
+              ].map((l) => (
+                <li key={l.to}><Link to={l.to} className="hover:text-primary-foreground transition-smooth">{l.l}</Link></li>
               ))}
             </ul>
           </div>
 
-          {/* Categories */}
           <div className="lg:col-span-3">
             <h4 className="font-display font-bold text-base mb-5">Categories</h4>
             <ul className="space-y-3 text-sm text-primary-foreground/70">
               {categories.map((c) => (
-                <li key={c.slug}><a href="#" className="hover:text-primary-foreground transition-smooth">{c.name}</a></li>
+                <li key={c.slug}><Link to={`/category/${c.slug}`} className="hover:text-primary-foreground transition-smooth">{c.name}</Link></li>
               ))}
             </ul>
           </div>
 
-          {/* Contact */}
           <div className="lg:col-span-3">
-            <h4 className="font-display font-bold text-base mb-5">Get in Touch</h4>
+            <h4 className="font-display font-bold text-base mb-5">Visit us</h4>
             <ul className="space-y-4 text-sm text-primary-foreground/70">
               <li className="flex gap-3">
                 <Phone className="w-4 h-4 mt-0.5 shrink-0 text-primary-glow" />
@@ -77,9 +81,9 @@ export const Footer = () => {
         <div className="pt-8 border-t border-primary-foreground/10 flex flex-col md:flex-row justify-between gap-4 text-sm text-primary-foreground/60">
           <div>© {new Date().getFullYear()} MARTIFY Super Mart. All rights reserved.</div>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-primary-foreground">Privacy</a>
-            <a href="#" className="hover:text-primary-foreground">Terms</a>
-            <a href="#" className="hover:text-primary-foreground">FAQ</a>
+            <Link to="/privacy" className="hover:text-primary-foreground">Privacy</Link>
+            <Link to="/terms" className="hover:text-primary-foreground">Terms</Link>
+            <Link to="/faq" className="hover:text-primary-foreground">FAQ</Link>
           </div>
         </div>
       </div>

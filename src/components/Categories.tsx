@@ -1,27 +1,28 @@
 import { ArrowUpRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import { categories } from "@/data/products";
 
 export const Categories = () => {
   return (
-    <section id="categories" className="py-20 lg:py-28">
+    <section className="py-20 lg:py-28">
       <div className="container-page">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
           <div className="max-w-2xl">
             <div className="text-sm font-semibold text-primary uppercase tracking-wider mb-3">Shop by Category</div>
             <h2 className="font-display font-bold text-3xl lg:text-5xl tracking-tight">
-              Curated collections for every corner of your life
+              Six departments. <span className="italic text-muted-foreground">One trusted shop.</span>
             </h2>
           </div>
-          <a href="#shop" className="text-primary font-medium inline-flex items-center gap-1 hover:gap-2 transition-all">
-            View all categories <ArrowUpRight className="w-4 h-4" />
-          </a>
+          <Link to="/shop" className="text-primary font-medium inline-flex items-center gap-1 hover:gap-2 transition-all">
+            Browse the full shop <ArrowUpRight className="w-4 h-4" />
+          </Link>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-6">
           {categories.map((cat, i) => (
-            <a
+            <Link
               key={cat.slug}
-              href={`#category-${cat.slug}`}
+              to={`/category/${cat.slug}`}
               className="group relative aspect-[4/5] md:aspect-square rounded-3xl overflow-hidden bg-muted hover-lift shadow-card animate-fade-in-up"
               style={{ animationDelay: `${i * 80}ms` }}
             >
@@ -37,13 +38,16 @@ export const Categories = () => {
               <div className="absolute inset-0 p-5 lg:p-7 flex flex-col justify-end text-primary-foreground">
                 <div className="text-xs font-medium opacity-80 mb-1">{cat.count} products</div>
                 <div className="flex items-end justify-between gap-2">
-                  <h3 className="font-display font-bold text-lg lg:text-2xl leading-tight">{cat.name}</h3>
+                  <div>
+                    <h3 className="font-display font-bold text-lg lg:text-2xl leading-tight">{cat.name}</h3>
+                    <div className="text-xs opacity-70 italic mt-1">{cat.tagline}</div>
+                  </div>
                   <div className="w-10 h-10 rounded-full glass flex items-center justify-center group-hover:bg-primary-foreground group-hover:text-primary transition-smooth">
                     <ArrowUpRight className="w-4 h-4" />
                   </div>
                 </div>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       </div>
