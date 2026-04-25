@@ -105,19 +105,19 @@
   }
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'DM Sans', system-ui, sans-serif;
+    font-family: 'Poppins', system-ui, sans-serif;
   }
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'Poppins', system-ui, sans-serif;
     @apply tracking-tight;
-    font-feature-settings: "ss01", "liga";
+    font-weight: 700;
   }
 }
 
 @layer utilities {
-  .font-display { font-family: 'Playfair Display', Georgia, serif; letter-spacing: -0.01em; }
+  .font-display { font-family: 'Poppins', system-ui, sans-serif; letter-spacing: -0.02em; }
   .font-grotesk { font-family: 'Poppins', system-ui, sans-serif; }
-  .font-sans { font-family: 'DM Sans', system-ui, sans-serif; }
+  .font-sans { font-family: 'Poppins', system-ui, sans-serif; }
 
   .bg-gradient-hero { background: var(--gradient-hero); }
   .bg-gradient-soft { background: var(--gradient-soft); }
