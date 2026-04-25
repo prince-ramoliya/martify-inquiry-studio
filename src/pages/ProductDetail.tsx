@@ -110,7 +110,7 @@ const ProductDetail = () => {
               </ul>
 
               <div className="flex flex-col sm:flex-row items-stretch gap-3">
-                <div className="flex items-center bg-muted rounded-full p-1 h-13 self-start sm:self-stretch">
+                <div className="flex items-center bg-muted rounded-full p-1 h-12 self-start sm:self-stretch">
                   <button onClick={() => setQty(Math.max(1, qty - 1))} className="w-10 h-10 rounded-full hover:bg-background flex items-center justify-center transition-smooth">
                     <Minus className="w-4 h-4" />
                   </button>
@@ -135,7 +135,7 @@ const ProductDetail = () => {
                 >
                   <Heart className={wishHas ? "fill-current" : ""} /> Wishlist
                 </Button>
-                <a href={buildProductInquiry(product)} target="_blank" rel="noopener noreferrer">
+                <a href={buildProductInquiry(product)} target="_blank" rel="noopener noreferrer" className="contents">
                   <Button variant="whatsapp" size="lg" className="w-full">
                     <MessageCircle /> Send Inquiry
                   </Button>
@@ -143,7 +143,7 @@ const ProductDetail = () => {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="w-13 px-0"
+                  className="w-12 h-12 px-0"
                   onClick={() => {
                     if (navigator.share) navigator.share({ title: product.name, url: window.location.href });
                     else { navigator.clipboard.writeText(window.location.href); toast("Link copied"); }
