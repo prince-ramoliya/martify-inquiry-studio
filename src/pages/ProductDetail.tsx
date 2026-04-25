@@ -109,13 +109,13 @@ const ProductDetail = () => {
                 ))}
               </ul>
 
-              <div className="flex items-center gap-4">
-                <div className="flex items-center bg-muted rounded-full p-1">
-                  <button onClick={() => setQty(Math.max(1, qty - 1))} className="w-9 h-9 rounded-full hover:bg-background flex items-center justify-center">
+              <div className="flex flex-col sm:flex-row items-stretch gap-3">
+                <div className="flex items-center bg-muted rounded-full p-1 h-13 self-start sm:self-stretch">
+                  <button onClick={() => setQty(Math.max(1, qty - 1))} className="w-10 h-10 rounded-full hover:bg-background flex items-center justify-center transition-smooth">
                     <Minus className="w-4 h-4" />
                   </button>
-                  <span className="w-10 text-center font-semibold">{qty}</span>
-                  <button onClick={() => setQty(qty + 1)} className="w-9 h-9 rounded-full hover:bg-background flex items-center justify-center">
+                  <span className="w-10 text-center font-semibold font-grotesk">{qty}</span>
+                  <button onClick={() => setQty(qty + 1)} className="w-10 h-10 rounded-full hover:bg-background flex items-center justify-center transition-smooth">
                     <Plus className="w-4 h-4" />
                   </button>
                 </div>
@@ -124,11 +124,10 @@ const ProductDetail = () => {
                 </Button>
               </div>
 
-              <div className="flex gap-3">
+              <div className="grid grid-cols-[1fr_1fr_auto] gap-3">
                 <Button
                   variant={wishHas ? "default" : "outline"}
                   size="lg"
-                  className="flex-1"
                   onClick={() => {
                     wishToggle(product.id);
                     toast(wishHas ? "Removed from wishlist" : "Added to wishlist");
@@ -136,7 +135,7 @@ const ProductDetail = () => {
                 >
                   <Heart className={wishHas ? "fill-current" : ""} /> Wishlist
                 </Button>
-                <a href={buildProductInquiry(product)} target="_blank" rel="noopener noreferrer" className="flex-1">
+                <a href={buildProductInquiry(product)} target="_blank" rel="noopener noreferrer">
                   <Button variant="whatsapp" size="lg" className="w-full">
                     <MessageCircle /> Send Inquiry
                   </Button>
@@ -144,10 +143,12 @@ const ProductDetail = () => {
                 <Button
                   variant="outline"
                   size="lg"
+                  className="w-13 px-0"
                   onClick={() => {
                     if (navigator.share) navigator.share({ title: product.name, url: window.location.href });
                     else { navigator.clipboard.writeText(window.location.href); toast("Link copied"); }
                   }}
+                  aria-label="Share"
                 >
                   <Share2 />
                 </Button>
