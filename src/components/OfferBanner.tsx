@@ -49,7 +49,7 @@ const banners: Banner[] = [
     image: kitchen,
     tone: "noir",
   },
-].slice(0, 3);
+];
 
 const toneStyles: Record<Banner["tone"], { wrap: string; overlay: string; text: string; eyebrow: string; cta: string }> = {
   royal: {
