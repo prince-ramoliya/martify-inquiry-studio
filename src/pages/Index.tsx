@@ -1,16 +1,44 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Header } from "@/components/Header";
+import { Hero } from "@/components/Hero";
+import { Categories } from "@/components/Categories";
+import { FeaturedProducts } from "@/components/FeaturedProducts";
+import { WhyChoose } from "@/components/WhyChoose";
+import { PromoBanner } from "@/components/PromoBanner";
+import { Testimonials } from "@/components/Testimonials";
+import { Footer } from "@/components/Footer";
+import { WhatsAppFloat } from "@/components/WhatsAppFloat";
+import { useEffect } from "react";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const Index = () => {
+  useEffect(() => {
+    document.title = "MARTIFY Super Mart — Pick smart. Shop smart.";
+    const meta = document.querySelector('meta[name="description"]') || (() => {
+      const m = document.createElement("meta");
+      m.setAttribute("name", "description");
+      document.head.appendChild(m);
+      return m;
+    })();
+    meta.setAttribute(
+      "content",
+      "MARTIFY Super Mart — premium products across beauty, home, kitchen, electronics, decor & more. Browse, wishlist, and inquire on WhatsApp."
+    );
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
+    <div className="min-h-screen bg-background">
+      <Header />
+      <main>
+        <Hero />
+        <Categories />
+        <FeaturedProducts />
+        <WhyChoose />
+        <PromoBanner />
+        <Testimonials />
+      </main>
+      <Footer />
+      <WhatsAppFloat />
     </div>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;
