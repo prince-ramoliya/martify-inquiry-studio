@@ -78,7 +78,7 @@ const ProductDetail = () => {
                 <div className="flex items-center gap-4 mt-3">
                   <div className="flex items-center gap-1">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-primary text-primary" : "text-muted"}`} />
+                      <Star key={i} className={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-yellow-400 text-yellow-400" : "text-muted"}`} />
                     ))}
                     <span className="text-sm font-medium ml-1">{product.rating}</span>
                   </div>
@@ -262,7 +262,7 @@ const ProductDetail = () => {
                 { n: "Meera K.", r: 4, t: "Good product for the price. Recommended." },
               ].map((r) => (
                 <div key={r.n} className="bg-card rounded-2xl p-6 shadow-card">
-                  <div className="flex gap-1 mb-2">{[...Array(r.r)].map((_, i) => <Star key={i} className="w-4 h-4 fill-primary text-primary" />)}</div>
+                  <div className="flex gap-1 mb-2">{[...Array(r.r)].map((_, i) => <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />)}</div>
                   <p className="text-foreground/80 mb-3">"{r.t}"</p>
                   <div className="text-sm font-semibold">{r.n}</div>
                 </div>
