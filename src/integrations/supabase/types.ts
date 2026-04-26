@@ -14,16 +14,254 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      categories: {
+        Row: {
+          active: boolean
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          name: string
+          position: number
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name: string
+          position?: number
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          position?: number
+          slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      hero_slides: {
+        Row: {
+          accent: string
+          active: boolean
+          created_at: string
+          cta_label: string
+          cta_to: string
+          description: string
+          eyebrow: string
+          id: string
+          image_url: string
+          italic: string
+          position: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          accent?: string
+          active?: boolean
+          created_at?: string
+          cta_label?: string
+          cta_to?: string
+          description?: string
+          eyebrow?: string
+          id?: string
+          image_url: string
+          italic?: string
+          position?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          accent?: string
+          active?: boolean
+          created_at?: string
+          cta_label?: string
+          cta_to?: string
+          description?: string
+          eyebrow?: string
+          id?: string
+          image_url?: string
+          italic?: string
+          position?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      products: {
+        Row: {
+          active: boolean
+          badge: string | null
+          category_id: string | null
+          created_at: string
+          description: string
+          featured: boolean
+          features: Json
+          gallery: Json
+          id: string
+          image_url: string
+          in_stock: boolean
+          mrp: number | null
+          name: string
+          position: number
+          price: number
+          rating: number
+          review_count: number
+          short_description: string
+          slug: string
+          specs: Json
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          badge?: string | null
+          category_id?: string | null
+          created_at?: string
+          description?: string
+          featured?: boolean
+          features?: Json
+          gallery?: Json
+          id?: string
+          image_url?: string
+          in_stock?: boolean
+          mrp?: number | null
+          name: string
+          position?: number
+          price?: number
+          rating?: number
+          review_count?: number
+          short_description?: string
+          slug: string
+          specs?: Json
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          badge?: string | null
+          category_id?: string | null
+          created_at?: string
+          description?: string
+          featured?: boolean
+          features?: Json
+          gallery?: Json
+          id?: string
+          image_url?: string
+          in_stock?: boolean
+          mrp?: number | null
+          name?: string
+          position?: number
+          price?: number
+          rating?: number
+          review_count?: number
+          short_description?: string
+          slug?: string
+          specs?: Json
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "products_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      site_settings: {
+        Row: {
+          address: string | null
+          brand_name: string
+          contact_email: string | null
+          contact_phone: string | null
+          id: number
+          logo_url: string | null
+          promo_banner_cta: string | null
+          promo_banner_image: string | null
+          promo_banner_subtitle: string | null
+          promo_banner_title: string | null
+          promo_banner_to: string | null
+          updated_at: string
+          whatsapp_number: string | null
+        }
+        Insert: {
+          address?: string | null
+          brand_name?: string
+          contact_email?: string | null
+          contact_phone?: string | null
+          id?: number
+          logo_url?: string | null
+          promo_banner_cta?: string | null
+          promo_banner_image?: string | null
+          promo_banner_subtitle?: string | null
+          promo_banner_title?: string | null
+          promo_banner_to?: string | null
+          updated_at?: string
+          whatsapp_number?: string | null
+        }
+        Update: {
+          address?: string | null
+          brand_name?: string
+          contact_email?: string | null
+          contact_phone?: string | null
+          id?: number
+          logo_url?: string | null
+          promo_banner_cta?: string | null
+          promo_banner_image?: string | null
+          promo_banner_subtitle?: string | null
+          promo_banner_title?: string | null
+          promo_banner_to?: string | null
+          updated_at?: string
+          whatsapp_number?: string | null
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +388,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
