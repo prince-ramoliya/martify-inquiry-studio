@@ -160,7 +160,7 @@ export const Hero = () => {
                   </Button>
                 </Link>
                 <a
-                  href={buildWhatsAppLink("Hello MARTIFY, I'd like to know more.")}
+                  href={settings?.whatsapp_number ? `https://wa.me/${settings.whatsapp_number}?text=${encodeURIComponent("Hello, I'd like to know more.")}` : buildWhatsAppLink("Hello MARTIFY, I'd like to know more.")}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full sm:w-auto"
