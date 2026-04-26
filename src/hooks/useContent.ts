@@ -31,7 +31,7 @@ function useRealtimeTable<T>(table: string, order: string, opts?: { activeOnly?:
   useEffect(() => {
     let mounted = true;
     const fetch = async () => {
-      let q: any = supabase.from(table).select("*").order(order, { ascending: true });
+      let q: any = (supabase as any).from(table).select("*").order(order, { ascending: true });
       if (opts?.activeOnly) q = q.eq("active", true);
       const { data } = await q;
       if (mounted) { setRows((data ?? []) as T[]); setLoading(false); }
