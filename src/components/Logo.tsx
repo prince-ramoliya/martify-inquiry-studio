@@ -1,19 +1,36 @@
-import { Link } from "react-router-dom";
+import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import logoSrc from "@/assets/martify-logo.svg";
+import { useSiteSettings } from "@/hooks/useContent";
 
 export const Logo = ({ variant = "default" }: { variant?: "default" | "light" }) => {
   const isLight = variant === "light";
+  const settings = useSiteSettings();
+  const src = settings?.logo_url || logoSrc;
+  const nav = useNavigate();
+
+  const clicks = useRef<number[]>([]);
+  const onClick = (e: React.MouseEvent) => {
+    const now = Date.now();
+    clicks.current = [...clicks.current.filter((t) => now - t < 1200), now];
+    if (clicks.current.length >= 3) {
+      e.preventDefault();
+      clicks.current = [];
+      nav("/admin/login");
+      return;
+    }
+    nav("/");
+  };
+
   return (
-    <Link to="/" className="flex items-center group" aria-label="MARTIFY home">
+    <a href="/" onClick={onClick} className="flex items-center group cursor-pointer" aria-label="MARTIFY home">
       <img
-        src={logoSrc}
-        alt="MARTIFY"
-        className={`h-9 sm:h-10 md:h-11 w-auto transition-spring group-hover:scale-[1.03] ${
-          isLight ? "brightness-0 invert" : ""
-        }`}
+        src={src}
+        alt={settings?.brand_name ?? "MARTIFY"}
+        className={`h-9 sm:h-10 md:h-11 w-auto transition-spring group-hover:scale-[1.03] ${isLight ? "brightness-0 invert" : ""}`}
         width={196}
         height={54}
       />
-    </Link>
+    </a>
   );
 };

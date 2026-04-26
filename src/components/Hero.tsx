@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ArrowRight, MessageCircle, Sparkles, Star, Truck, ShieldCheck } from "lucide-react";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
@@ -6,6 +6,7 @@ import banner1 from "@/assets/hero-banner-1.webp";
 import banner2 from "@/assets/hero-banner-2.webp";
 import banner3 from "@/assets/hero-banner-3.webp";
 import { buildWhatsAppLink } from "@/data/products";
+import { useHeroSlides, useSiteSettings } from "@/hooks/useContent";
 
 type Slide = {
   eyebrow: string;
@@ -18,7 +19,7 @@ type Slide = {
   accent: string;
 };
 
-const slides: Slide[] = [
+const fallbackSlides: Slide[] = [
   {
     eyebrow: "New Season · 2025",
     title: "Smart picks for",
@@ -65,9 +66,20 @@ const marqueeItems = [
 ];
 
 export const Hero = () => {
+  const { rows: dbSlides } = useHeroSlides(true);
+  const settings = useSiteSettings();
+  const slides: Slide[] = useMemo(() => {
+    if (dbSlides.length === 0) return fallbackSlides;
+    return dbSlides.map((s) => ({
+      eyebrow: s.eyebrow, title: s.title, italic: s.italic, description: s.description,
+      cta: s.cta_label, to: s.cta_to, image: s.image_url, accent: s.accent,
+    }));
+  }, [dbSlides]);
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const total = slides.length;
+
+  useEffect(() => { if (index >= total) setIndex(0); }, [total, index]);
 
   useEffect(() => {
     if (paused) return;
@@ -148,7 +160,7 @@ export const Hero = () => {
                   </Button>
                 </Link>
                 <a
-                  href={buildWhatsAppLink("Hello MARTIFY, I'd like to know more.")}
+                  href={settings?.whatsapp_number ? `https://wa.me/${settings.whatsapp_number}?text=${encodeURIComponent("Hello, I'd like to know more.")}` : buildWhatsAppLink("Hello MARTIFY, I'd like to know more.")}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full sm:w-auto"
