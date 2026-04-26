@@ -4,8 +4,8 @@ import { PageHeader } from "@/components/PageHeader";
 import { Seo } from "@/components/Seo";
 import { Button } from "@/components/ui/button";
 import { categories } from "@/data/products";
-import lifestyle from "@/assets/hero-lifestyle.jpg";
-import secondary from "@/assets/hero-secondary.jpg";
+import lifestyle from "@/assets/hero-lifestyle.webp";
+import secondary from "@/assets/hero-secondary.webp";
 
 const About = () => {
   return (

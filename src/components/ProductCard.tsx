@@ -43,6 +43,7 @@ export const ProductCard = ({ p, i = 0 }: { p: Product; i?: number }) => {
             src={p.image}
             alt={p.name}
             loading="lazy"
+            decoding="async"
             width={800}
             height={800}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"

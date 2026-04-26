@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
-import promo from "@/assets/promo-banner.jpg";
-import beauty from "@/assets/cat-beauty.jpg";
-import kitchen from "@/assets/cat-kitchen.jpg";
+import promo from "@/assets/promo-banner.webp";
+import beauty from "@/assets/cat-beauty.webp";
+import kitchen from "@/assets/cat-kitchen.webp";
 
 type Banner = {
   eyebrow: string;

@@ -109,49 +109,101 @@ const ProductDetail = () => {
                 ))}
               </ul>
 
-              <div className="flex flex-col sm:flex-row items-stretch gap-3">
-                <div className="flex items-center bg-muted rounded-full p-1 h-14 self-stretch">
-                  <button onClick={() => setQty(Math.max(1, qty - 1))} className="w-12 h-12 rounded-full hover:bg-background flex items-center justify-center transition-smooth">
-                    <Minus className="w-4 h-4" />
-                  </button>
-                  <span className="w-10 text-center font-semibold font-grotesk">{qty}</span>
-                  <button onClick={() => setQty(qty + 1)} className="w-12 h-12 rounded-full hover:bg-background flex items-center justify-center transition-smooth">
-                    <Plus className="w-4 h-4" />
-                  </button>
+              {/* === MOBILE buttons (app-like stacked layout) === */}
+              <div className="space-y-3 sm:hidden">
+                {/* Qty selector + wishlist row */}
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center bg-muted rounded-full p-1 h-14 flex-1">
+                    <button onClick={() => setQty(Math.max(1, qty - 1))} className="w-12 h-12 rounded-full bg-background shadow-sm flex items-center justify-center transition-smooth active:scale-95">
+                      <Minus className="w-4 h-4" />
+                    </button>
+                    <span className="flex-1 text-center font-bold font-grotesk text-base">{qty}</span>
+                    <button onClick={() => setQty(qty + 1)} className="w-12 h-12 rounded-full bg-background shadow-sm flex items-center justify-center transition-smooth active:scale-95">
+                      <Plus className="w-4 h-4" />
+                    </button>
+                  </div>
+                  <Button
+                    variant={wishHas ? "default" : "outline"}
+                    size="xl"
+                    className="w-14 h-14 px-0 rounded-full"
+                    onClick={() => {
+                      wishToggle(product.id);
+                      toast(wishHas ? "Removed from wishlist" : "Added to wishlist");
+                    }}
+                    aria-label="Wishlist"
+                  >
+                    <Heart className={wishHas ? "fill-current" : ""} />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="xl"
+                    className="w-14 h-14 px-0 rounded-full"
+                    onClick={() => {
+                      if (navigator.share) navigator.share({ title: product.name, url: window.location.href });
+                      else { navigator.clipboard.writeText(window.location.href); toast("Link copied"); }
+                    }}
+                    aria-label="Share"
+                  >
+                    <Share2 />
+                  </Button>
                 </div>
-                <Button variant="hero" size="xl" className="flex-1" onClick={onAdd}>
-                  <ShoppingCart /> Add to Cart
+                {/* Primary CTA */}
+                <Button variant="hero" size="xl" className="w-full shadow-glow" onClick={onAdd}>
+                  <ShoppingCart /> Add to Cart · {formatPrice(product.price * qty)}
                 </Button>
-              </div>
-
-              <div className="grid grid-cols-[1fr_1fr_auto] gap-3">
-                <Button
-                  variant={wishHas ? "default" : "outline"}
-                  size="xl"
-                  onClick={() => {
-                    wishToggle(product.id);
-                    toast(wishHas ? "Removed from wishlist" : "Added to wishlist");
-                  }}
-                >
-                  <Heart className={wishHas ? "fill-current" : ""} /> Wishlist
-                </Button>
-                <a href={buildProductInquiry(product)} target="_blank" rel="noopener noreferrer" className="contents">
+                {/* Secondary CTA */}
+                <a href={buildProductInquiry(product)} target="_blank" rel="noopener noreferrer" className="block">
                   <Button variant="whatsapp" size="xl" className="w-full">
-                    <MessageCircle /> Send Inquiry
+                    <MessageCircle /> Send Inquiry on WhatsApp
                   </Button>
                 </a>
-                <Button
-                  variant="outline"
-                  size="xl"
-                  className="w-14 h-14 px-0"
-                  onClick={() => {
-                    if (navigator.share) navigator.share({ title: product.name, url: window.location.href });
-                    else { navigator.clipboard.writeText(window.location.href); toast("Link copied"); }
-                  }}
-                  aria-label="Share"
-                >
-                  <Share2 />
-                </Button>
+              </div>
+
+              {/* === DESKTOP buttons === */}
+              <div className="hidden sm:block space-y-3">
+                <div className="flex items-stretch gap-3">
+                  <div className="flex items-center bg-muted rounded-full p-1 h-14">
+                    <button onClick={() => setQty(Math.max(1, qty - 1))} className="w-12 h-12 rounded-full hover:bg-background flex items-center justify-center transition-smooth">
+                      <Minus className="w-4 h-4" />
+                    </button>
+                    <span className="w-10 text-center font-semibold font-grotesk">{qty}</span>
+                    <button onClick={() => setQty(qty + 1)} className="w-12 h-12 rounded-full hover:bg-background flex items-center justify-center transition-smooth">
+                      <Plus className="w-4 h-4" />
+                    </button>
+                  </div>
+                  <Button variant="hero" size="xl" className="flex-1" onClick={onAdd}>
+                    <ShoppingCart /> Add to Cart
+                  </Button>
+                </div>
+                <div className="grid grid-cols-[1fr_1fr_auto] gap-3">
+                  <Button
+                    variant={wishHas ? "default" : "outline"}
+                    size="xl"
+                    onClick={() => {
+                      wishToggle(product.id);
+                      toast(wishHas ? "Removed from wishlist" : "Added to wishlist");
+                    }}
+                  >
+                    <Heart className={wishHas ? "fill-current" : ""} /> Wishlist
+                  </Button>
+                  <a href={buildProductInquiry(product)} target="_blank" rel="noopener noreferrer" className="contents">
+                    <Button variant="whatsapp" size="xl" className="w-full">
+                      <MessageCircle /> Send Inquiry
+                    </Button>
+                  </a>
+                  <Button
+                    variant="outline"
+                    size="xl"
+                    className="w-14 h-14 px-0"
+                    onClick={() => {
+                      if (navigator.share) navigator.share({ title: product.name, url: window.location.href });
+                      else { navigator.clipboard.writeText(window.location.href); toast("Link copied"); }
+                    }}
+                    aria-label="Share"
+                  >
+                    <Share2 />
+                  </Button>
+                </div>
               </div>
 
               <div className="grid grid-cols-3 gap-3 pt-4 border-t border-border">
