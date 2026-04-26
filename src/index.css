@@ -172,18 +172,20 @@
     display: flex;
     overflow: hidden;
     user-select: none;
-    gap: 3rem;
   }
   .marquee__inner {
     display: flex;
     gap: 3rem;
-    animation: marquee 30s linear infinite;
-    flex-shrink: 0;
-    min-width: 100%;
+    width: max-content;
+    animation: marquee 35s linear infinite;
+    will-change: transform;
+  }
+  .marquee:hover .marquee__inner {
+    animation-play-state: paused;
   }
   @keyframes marquee {
     from { transform: translateX(0); }
-    to { transform: translateX(-100%); }
+    to { transform: translateX(-50%); }
   }
 
   /* Hide scrollbar */
