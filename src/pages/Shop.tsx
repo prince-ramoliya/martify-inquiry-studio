@@ -63,8 +63,8 @@ const Shop = () => {
         />
       </div>
 
-      {/* === MOBILE APP-STYLE TOOLBAR === */}
-      <div className="lg:hidden sticky top-16 z-30 bg-background/95 backdrop-blur-md border-b border-border">
+      {/* === MOBILE APP-STYLE TOOLBAR (non-sticky) === */}
+      <div className="lg:hidden bg-background border-b border-border">
         <div className="container-page py-3 space-y-3">
           {/* Title + count */}
           <div className="flex items-center justify-between">

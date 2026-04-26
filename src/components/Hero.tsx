@@ -93,6 +93,8 @@ export const Hero = () => {
             src={s.image}
             alt={s.title}
             loading={i === 0 ? "eager" : "lazy"}
+            fetchPriority={i === 0 ? "high" : "low"}
+            decoding={i === 0 ? "sync" : "async"}
             className={`absolute inset-0 w-full h-full object-cover transition-all duration-[1400ms] ease-out ${
               i === index ? "opacity-100 scale-100" : "opacity-0 scale-105"
             }`}

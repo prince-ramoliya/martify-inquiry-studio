@@ -35,8 +35,27 @@ export const Header = () => {
         scrolled ? "glass shadow-card" : "bg-background border-b border-transparent"
       }`}
     >
-      <div className="container-page flex items-center justify-between h-16 md:h-20 gap-4">
-        <Logo />
+      <div className="container-page relative flex items-center justify-between h-16 md:h-20 gap-4">
+        {/* MOBILE: hamburger left */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="lg:hidden rounded-full -ml-2"
+          onClick={() => setOpen(!open)}
+          aria-label="Menu"
+        >
+          {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        </Button>
+
+        {/* MOBILE: centered logo */}
+        <div className="lg:hidden absolute left-1/2 -translate-x-1/2">
+          <Logo />
+        </div>
+
+        {/* DESKTOP: logo on the left */}
+        <div className="hidden lg:block">
+          <Logo />
+        </div>
 
         <nav className="hidden lg:flex items-center gap-1">
           {navLinks.map((l) => (
@@ -56,7 +75,7 @@ export const Header = () => {
           ))}
         </nav>
 
-        <div className="hidden md:flex items-center gap-2 flex-1 max-w-xs mx-2">
+        <div className="hidden lg:flex items-center gap-2 flex-1 max-w-xs mx-2">
           <div className="relative w-full">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <input
@@ -88,21 +107,12 @@ export const Header = () => {
               )}
             </Button>
           </Link>
-          <Link to="/contact" className="hidden md:block">
+          <Link to="/contact" className="hidden lg:block">
             <Button variant="hero" size="sm">
               <Phone className="w-4 h-4" />
               Contact
             </Button>
           </Link>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="lg:hidden rounded-full"
-            onClick={() => setOpen(!open)}
-            aria-label="Menu"
-          >
-            {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </Button>
         </div>
       </div>
 
