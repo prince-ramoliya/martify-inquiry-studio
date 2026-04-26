@@ -35,7 +35,7 @@ export const Header = () => {
         scrolled ? "glass shadow-card" : "bg-background border-b border-transparent"
       }`}
     >
-      <div className="container-page flex items-center justify-between h-16 md:h-20 gap-4">
+      <div className="container-page relative flex items-center justify-between h-16 md:h-20 gap-4">
         {/* MOBILE: hamburger left */}
         <Button
           variant="ghost"
