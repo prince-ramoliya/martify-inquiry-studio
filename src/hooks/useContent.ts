@@ -37,9 +37,8 @@ function useRealtimeTable<T>(table: string, order: string, opts?: { activeOnly?:
       if (mounted) { setRows((data ?? []) as T[]); setLoading(false); }
     };
     fetch();
-    const ch = supabase
-      .channel(`rt:${table}`)
-      .on("postgres_changes", { event: "*", schema: "public", table }, () => fetch())
+    const ch = supabase.channel(`rt:${table}:${Math.random().toString(36).slice(2)}`);
+    ch.on("postgres_changes", { event: "*", schema: "public", table }, () => fetch())
       .subscribe();
     return () => { mounted = false; supabase.removeChannel(ch); };
   }, [table, order, opts?.activeOnly]);
@@ -62,9 +61,8 @@ export function useSiteSettings() {
       if (data) setSettings(data as DbSettings);
     };
     fetch();
-    const ch = supabase
-      .channel("rt:site_settings")
-      .on("postgres_changes", { event: "*", schema: "public", table: "site_settings" }, () => fetch())
+    const ch = supabase.channel(`rt:site_settings:${Math.random().toString(36).slice(2)}`);
+    ch.on("postgres_changes", { event: "*", schema: "public", table: "site_settings" }, () => fetch())
       .subscribe();
     return () => { supabase.removeChannel(ch); };
   }, []);
