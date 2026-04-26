@@ -66,9 +66,20 @@ const marqueeItems = [
 ];
 
 export const Hero = () => {
+  const { rows: dbSlides } = useHeroSlides(true);
+  const settings = useSiteSettings();
+  const slides: Slide[] = useMemo(() => {
+    if (dbSlides.length === 0) return fallbackSlides;
+    return dbSlides.map((s) => ({
+      eyebrow: s.eyebrow, title: s.title, italic: s.italic, description: s.description,
+      cta: s.cta_label, to: s.cta_to, image: s.image_url, accent: s.accent,
+    }));
+  }, [dbSlides]);
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const total = slides.length;
+
+  useEffect(() => { if (index >= total) setIndex(0); }, [total, index]);
 
   useEffect(() => {
     if (paused) return;
