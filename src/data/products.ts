@@ -5,6 +5,52 @@ import stationary from "@/assets/cat-stationary.jpg";
 import electronics from "@/assets/cat-electronics.jpg";
 import toys from "@/assets/cat-toys.jpg";
 
+// Unique product imagery
+import p1 from "@/assets/products/p1-blender.jpg";
+import p2 from "@/assets/products/p2-toaster.jpg";
+import p3 from "@/assets/products/p3-kettle.jpg";
+import p4 from "@/assets/products/p4-airfryer.jpg";
+import p5 from "@/assets/products/p5-mixer.jpg";
+import p6 from "@/assets/products/p6-induction.jpg";
+import p7 from "@/assets/products/p7-jars.jpg";
+import p8 from "@/assets/products/p8-tawa.jpg";
+import p9 from "@/assets/products/p9-serum.jpg";
+import p10 from "@/assets/products/p10-cream.jpg";
+import p11 from "@/assets/products/p11-aloe.jpg";
+import p12 from "@/assets/products/p12-haircare.jpg";
+import p13 from "@/assets/products/p13-sunscreen.jpg";
+import p14 from "@/assets/products/p14-lipbalm.jpg";
+import p15 from "@/assets/products/p15-hairdryer.jpg";
+import p16 from "@/assets/products/p16-facewash.jpg";
+import p17 from "@/assets/products/p17-speaker.jpg";
+import p18 from "@/assets/products/p18-headphones.jpg";
+import p19 from "@/assets/products/p19-earbuds.jpg";
+import p20 from "@/assets/products/p20-powerbank.jpg";
+import p21 from "@/assets/products/p21-bulb.jpg";
+import p22 from "@/assets/products/p22-charger.jpg";
+import p23 from "@/assets/products/p23-vase.jpg";
+import p24 from "@/assets/products/p24-clock.jpg";
+import p25 from "@/assets/products/p25-candle.jpg";
+import p26 from "@/assets/products/p26-cushion.jpg";
+import p27 from "@/assets/products/p27-lamp.jpg";
+import p28 from "@/assets/products/p28-frame.jpg";
+import p29 from "@/assets/products/p29-notebook.jpg";
+import p30 from "@/assets/products/p30-pens.jpg";
+import p31 from "@/assets/products/p31-organizer.jpg";
+import p32 from "@/assets/products/p32-stickynotes.jpg";
+import p33 from "@/assets/products/p33-sketchbook.jpg";
+import p34 from "@/assets/products/p34-blocks.jpg";
+import p35 from "@/assets/products/p35-football.jpg";
+import p36 from "@/assets/products/p36-bear.jpg";
+import p37 from "@/assets/products/p37-badminton.jpg";
+import p38 from "@/assets/products/p38-yogamat.jpg";
+
+const productImages: Record<string, string> = {
+  p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16,
+  p17, p18, p19, p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30,
+  p31, p32, p33, p34, p35, p36, p37, p38,
+};
+
 export const WHATSAPP_NUMBER = "919879177924";
 
 export type Category = {
@@ -68,7 +114,7 @@ const make = (
     name,
     category: cat.name,
     categorySlug: catSlug,
-    image: imageByCategory[catSlug],
+    image: productImages[id] ?? imageByCategory[catSlug],
     price,
     mrp: opts.mrp ?? Math.round(price * 1.25),
     rating: opts.rating ?? 4.5,
