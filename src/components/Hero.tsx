@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ArrowRight, MessageCircle, Sparkles, Star, Truck, ShieldCheck } from "lucide-react";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
@@ -6,6 +6,7 @@ import banner1 from "@/assets/hero-banner-1.webp";
 import banner2 from "@/assets/hero-banner-2.webp";
 import banner3 from "@/assets/hero-banner-3.webp";
 import { buildWhatsAppLink } from "@/data/products";
+import { useHeroSlides, useSiteSettings } from "@/hooks/useContent";
 
 type Slide = {
   eyebrow: string;
@@ -18,7 +19,7 @@ type Slide = {
   accent: string;
 };
 
-const slides: Slide[] = [
+const fallbackSlides: Slide[] = [
   {
     eyebrow: "New Season · 2025",
     title: "Smart picks for",
