@@ -87,19 +87,24 @@ export const Hero = () => {
         onTouchStart={() => setPaused(true)}
       >
         {/* Slides */}
-        {slides.map((s, i) => (
-          <img
-            key={i}
-            src={s.image}
-            alt={s.title}
-            loading={i === 0 ? "eager" : "lazy"}
-            fetchPriority={i === 0 ? "high" : "low"}
-            decoding={i === 0 ? "sync" : "async"}
-            className={`absolute inset-0 w-full h-full object-cover transition-all duration-[1400ms] ease-out ${
-              i === index ? "opacity-100 scale-100" : "opacity-0 scale-105"
-            }`}
-          />
-        ))}
+        {slides.map((s, i) => {
+          // Only render slides that have been or will soon be visible to avoid
+          // blocking the LCP with non-critical hero images.
+          const shouldRender = i === 0 || i <= index + 1;
+          return (
+            <img
+              key={i}
+              src={shouldRender ? s.image : undefined}
+              alt={s.title}
+              loading={i === 0 ? "eager" : "lazy"}
+              fetchPriority={i === 0 ? "high" : "low"}
+              decoding={i === 0 ? "sync" : "async"}
+              className={`absolute inset-0 w-full h-full object-cover transition-all duration-[1400ms] ease-out ${
+                i === index ? "opacity-100 scale-100" : "opacity-0 scale-105"
+              }`}
+            />
+          );
+        })}
 
         {/* Overlays for legibility */}
         <div className="absolute inset-0 bg-gradient-to-r from-foreground/85 via-foreground/55 to-foreground/20" />
