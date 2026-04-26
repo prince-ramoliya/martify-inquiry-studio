@@ -1,6 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "./ui/button";
-import promo from "@/assets/promo-banner.jpg";
+import promo from "@/assets/promo-banner.webp";
 
 export const PromoBanner = () => {
   return (
