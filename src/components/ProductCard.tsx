@@ -42,8 +42,9 @@ export const ProductCard = ({ p, i = 0 }: { p: Product; i?: number }) => {
             ref={imgRef}
             src={p.image}
             alt={p.name}
-            loading="lazy"
+            loading={i < 4 ? "eager" : "lazy"}
             decoding="async"
+            fetchPriority={i < 4 ? "high" : "auto"}
             width={800}
             height={800}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
