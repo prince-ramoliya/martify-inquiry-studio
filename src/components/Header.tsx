@@ -97,7 +97,7 @@ export const Header = () => {
               )}
             </Button>
           </Link>
-          <Link to="/cart">
+          <Link to="/cart" className="hidden md:block">
             <Button variant="ghost" size="icon" className="rounded-full relative" aria-label="Cart" id="cart-target">
               <ShoppingCart className="w-5 h-5" />
               {cartCount > 0 && (
