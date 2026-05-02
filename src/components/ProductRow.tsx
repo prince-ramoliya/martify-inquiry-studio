@@ -36,7 +36,7 @@ export const ProductRow = ({ eyebrow, title, subtitle, products, viewAllTo = "/s
           </Link>
         </div>
 
-        <div className="-mx-4 px-4 md:mx-0 md:px-0 overflow-x-auto scrollbar-hide snap-x snap-mandatory">
+        <div className="-mx-4 px-4 md:mx-0 md:px-0 overflow-x-auto no-scrollbar snap-x snap-mandatory">
           <div className="flex gap-3 md:gap-5 pb-2">
             {products.map((p, i) => (
               <div
