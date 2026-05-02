@@ -91,6 +91,65 @@ export const Hero = () => {
 
   return (
     <section className="relative" aria-roledescription="carousel">
+      {/* MOBILE: minimal hero */}
+      <div className="md:hidden relative">
+        <div
+          className="relative w-full h-[62vh] min-h-[420px] overflow-hidden bg-foreground"
+          onTouchStart={() => setPaused(true)}
+        >
+          {slides.map((s, i) => {
+            const shouldRender = i === 0 || i <= index + 1;
+            return (
+              <img
+                key={i}
+                src={shouldRender ? s.image : undefined}
+                alt={s.title}
+                loading={i === 0 ? "eager" : "lazy"}
+                fetchPriority={i === 0 ? "high" : "low"}
+                decoding={i === 0 ? "sync" : "async"}
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+                  i === index ? "opacity-100" : "opacity-0"
+                }`}
+              />
+            );
+          })}
+          <div className="absolute inset-0 bg-gradient-to-t from-foreground/85 via-foreground/40 to-foreground/20" />
+
+          <div className="absolute inset-x-0 bottom-0 p-5 pb-7 text-primary-foreground">
+            <div key={index} className="animate-fade-in-up">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full glass-dark text-[10px] font-semibold uppercase tracking-[0.18em] mb-3">
+                <Sparkles className="w-3 h-3" />
+                {current.eyebrow}
+              </div>
+              <h1 className="font-display font-extrabold text-3xl leading-[1.05] tracking-tight">
+                {current.title}{" "}
+                <span className="italic font-semibold">{current.italic}</span>
+              </h1>
+              <Link to={current.to} className="block mt-5">
+                <Button variant="hero" size="lg" className="w-full shadow-glow">
+                  {current.cta} <ArrowRight />
+                </Button>
+              </Link>
+
+              <div className="flex items-center gap-1.5 mt-4">
+                {slides.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setIndex(i)}
+                    aria-label={`Go to slide ${i + 1}`}
+                    className={`h-1 rounded-full transition-all duration-500 ${
+                      i === index ? "w-8 bg-primary-foreground" : "w-1.5 bg-primary-foreground/40"
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* DESKTOP / TABLET hero (original) */}
+      <div className="hidden md:block">
       {/* Full-bleed banner */}
       <div
         className="relative w-full h-[78vh] min-h-[520px] max-h-[820px] overflow-hidden bg-foreground"
@@ -208,6 +267,7 @@ export const Hero = () => {
           </div>
           <span className="text-xs font-grotesk font-bold">4.9 · 2,400+</span>
         </div>
+      </div>
       </div>
 
       {/* Infinite marquee strip */}
