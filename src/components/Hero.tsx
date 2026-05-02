@@ -91,73 +91,108 @@ export const Hero = () => {
 
   return (
     <section className="relative" aria-roledescription="carousel">
-      {/* MOBILE: ultra-minimal hero */}
-      <div className="md:hidden relative bg-background">
-        <Link to={current.to} className="block px-4 pt-3 pb-4">
-          <div
-            className="relative w-full aspect-[4/5] max-h-[58vh] overflow-hidden rounded-3xl bg-foreground shadow-card"
-            onTouchStart={() => setPaused(true)}
-          >
-            {slides.map((s, i) => {
-              const shouldRender = i === 0 || i <= index + 1;
-              return (
-                <img
-                  key={i}
-                  src={shouldRender ? s.image : undefined}
-                  alt={s.title}
-                  loading={i === 0 ? "eager" : "lazy"}
-                  fetchPriority={i === 0 ? "high" : "low"}
-                  decoding={i === 0 ? "sync" : "async"}
-                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
-                    i === index ? "opacity-100" : "opacity-0"
-                  }`}
-                />
-              );
-            })}
+      {/* MOBILE: same architecture as desktop, scaled down */}
+      <div className="md:hidden relative">
+        <div
+          className="relative w-full h-[78vh] min-h-[520px] max-h-[720px] overflow-hidden bg-foreground"
+          onTouchStart={() => setPaused(true)}
+        >
+          {slides.map((s, i) => {
+            const shouldRender = i === 0 || i <= index + 1;
+            return (
+              <img
+                key={i}
+                src={shouldRender ? s.image : undefined}
+                alt={s.title}
+                loading={i === 0 ? "eager" : "lazy"}
+                fetchPriority={i === 0 ? "high" : "low"}
+                decoding={i === 0 ? "sync" : "async"}
+                className={`absolute inset-0 w-full h-full object-cover transition-all duration-[1400ms] ease-out ${
+                  i === index ? "opacity-100 scale-100" : "opacity-0 scale-105"
+                }`}
+              />
+            );
+          })}
 
-            {/* Soft bottom gradient only */}
-            <div className="absolute inset-0 bg-gradient-to-t from-foreground/75 via-foreground/10 to-transparent" />
+          {/* Legibility overlays */}
+          <div className="absolute inset-0 bg-gradient-to-r from-foreground/85 via-foreground/55 to-foreground/25" />
+          <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-transparent to-foreground/35" />
 
-            {/* Tiny eyebrow chip — top */}
-            <div className="absolute top-3 left-3">
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-background/90 backdrop-blur text-foreground text-[10px] font-semibold uppercase tracking-[0.14em]">
-                <Sparkles className="w-2.5 h-2.5 text-primary" />
-                {current.accent || "New"}
-              </span>
-            </div>
-
-            {/* Dots — top right */}
-            <div className="absolute top-3 right-3 flex items-center gap-1">
-              {slides.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setIndex(i);
-                  }}
-                  aria-label={`Go to slide ${i + 1}`}
-                  className={`h-1.5 rounded-full transition-all duration-500 ${
-                    i === index ? "w-5 bg-background" : "w-1.5 bg-background/50"
-                  }`}
-                />
-              ))}
-            </div>
-
-            {/* Title + CTA — bottom */}
-            <div className="absolute inset-x-0 bottom-0 p-4 text-primary-foreground">
-              <div key={index} className="animate-fade-in-up">
-                <h1 className="font-display font-extrabold text-[1.5rem] leading-[1.1] tracking-tight max-w-[16ch]">
-                  {current.title}{" "}
-                  <span className="italic font-semibold opacity-95">{current.italic}</span>
-                </h1>
-                <span className="inline-flex items-center gap-1.5 mt-3 px-3.5 py-1.5 rounded-full bg-background text-foreground text-xs font-semibold shadow-card">
-                  Shop now <ArrowRight className="w-3.5 h-3.5" />
-                </span>
+          {/* Top bar */}
+          <div className="absolute top-0 inset-x-0 z-10">
+            <div className="container-page pt-5 flex items-center justify-between text-primary-foreground">
+              <div className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.2em]">
+                <span className="w-6 h-px bg-primary-foreground/70" />
+                Surat · Est. 2019
+              </div>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full glass-dark">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="text-[10px] font-semibold">Open · 9 AM – 10 PM</span>
               </div>
             </div>
           </div>
-        </Link>
+
+          {/* Content */}
+          <div className="absolute inset-0 z-10 flex items-end">
+            <div className="container-page w-full pb-9">
+              <div key={index} className="max-w-md text-primary-foreground animate-fade-in-up">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full glass-dark text-[10px] font-semibold uppercase tracking-[0.18em] mb-3">
+                  <Sparkles className="w-3 h-3" />
+                  {current.eyebrow}
+                </div>
+                <h1 className="font-display font-extrabold text-[2rem] leading-[1.05] tracking-tight">
+                  {current.title}
+                  <br />
+                  <span className="italic font-semibold">{current.italic}</span>
+                </h1>
+                <p className="text-sm text-primary-foreground/85 leading-relaxed mt-3 line-clamp-3">
+                  {current.description}
+                </p>
+
+                <div className="flex items-center gap-2 mt-5">
+                  <Link to={current.to} className="flex-1">
+                    <Button variant="hero" size="lg" className="w-full shadow-glow">
+                      {current.cta} <ArrowRight />
+                    </Button>
+                  </Link>
+                  <a
+                    href={settings?.whatsapp_number ? `https://wa.me/${settings.whatsapp_number}?text=${encodeURIComponent("Hello, I'd like to know more.")}` : buildWhatsAppLink("Hello MARTIFY, I'd like to know more.")}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Chat on WhatsApp"
+                  >
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="h-12 w-12 bg-background/10 backdrop-blur-md border-primary-foreground/40 text-primary-foreground hover:bg-background hover:text-foreground"
+                    >
+                      <MessageCircle />
+                    </Button>
+                  </a>
+                </div>
+
+                {/* Slide indicators */}
+                <div className="flex items-center gap-3 mt-6">
+                  <div className="flex items-center gap-1.5">
+                    {slides.map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setIndex(i)}
+                        aria-label={`Go to slide ${i + 1}`}
+                        className={`h-1 rounded-full transition-all duration-500 ${
+                          i === index ? "w-8 bg-primary-foreground" : "w-2 bg-primary-foreground/40"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                  <span className="text-[10px] font-grotesk font-medium text-primary-foreground/70 tabular-nums">
+                    {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* DESKTOP / TABLET hero (original) */}

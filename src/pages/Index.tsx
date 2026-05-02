@@ -1,10 +1,17 @@
+import { lazy, Suspense } from "react";
 import { Hero } from "@/components/Hero";
-import { Categories } from "@/components/Categories";
-import { FeaturedProducts } from "@/components/FeaturedProducts";
-import { WhyChoose } from "@/components/WhyChoose";
-import { PromoBanner } from "@/components/PromoBanner";
-import { Testimonials } from "@/components/Testimonials";
 import { Seo } from "@/components/Seo";
+
+// Defer below-the-fold sections so the hero (LCP) ships first.
+const Categories = lazy(() => import("@/components/Categories").then((m) => ({ default: m.Categories })));
+const FeaturedProducts = lazy(() => import("@/components/FeaturedProducts").then((m) => ({ default: m.FeaturedProducts })));
+const WhyChoose = lazy(() => import("@/components/WhyChoose").then((m) => ({ default: m.WhyChoose })));
+const PromoBanner = lazy(() => import("@/components/PromoBanner").then((m) => ({ default: m.PromoBanner })));
+const Testimonials = lazy(() => import("@/components/Testimonials").then((m) => ({ default: m.Testimonials })));
+
+const SectionFallback = ({ h = "30vh" }: { h?: string }) => (
+  <div style={{ minHeight: h }} aria-hidden />
+);
 
 const Index = () => (
   <>
@@ -13,11 +20,21 @@ const Index = () => (
       description="Curated supermarket from Surat — beauty, kitchen, decor, electronics, stationary, toys. Browse, save & inquire on WhatsApp."
     />
     <Hero />
-    <Categories />
-    <FeaturedProducts />
-    <WhyChoose />
-    <PromoBanner />
-    <Testimonials />
+    <Suspense fallback={<SectionFallback h="40vh" />}>
+      <Categories />
+    </Suspense>
+    <Suspense fallback={<SectionFallback h="60vh" />}>
+      <FeaturedProducts />
+    </Suspense>
+    <Suspense fallback={<SectionFallback />}>
+      <WhyChoose />
+    </Suspense>
+    <Suspense fallback={<SectionFallback />}>
+      <PromoBanner />
+    </Suspense>
+    <Suspense fallback={<SectionFallback />}>
+      <Testimonials />
+    </Suspense>
   </>
 );
 
