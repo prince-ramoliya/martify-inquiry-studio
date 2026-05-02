@@ -93,19 +93,31 @@ export const ProductCard = ({ p, i = 0 }: { p: Product; i?: number }) => {
           </div>
 
           {/* Mobile-only persistent actions */}
-          <div className="md:hidden mt-3 flex gap-2">
-            <Button variant="hero" size="sm" className="flex-1 h-9 text-xs" onClick={handleAdd}>
-              <ShoppingCart className="w-3.5 h-3.5" /> Add
+          <div className="md:hidden mt-3 flex items-stretch gap-2 w-full">
+            <Button
+              variant="hero"
+              size="sm"
+              className="flex-1 min-w-0 h-9 px-2 text-xs gap-1"
+              onClick={handleAdd}
+            >
+              <ShoppingCart className="w-3.5 h-3.5 shrink-0" />
+              <span className="truncate">Add</span>
             </Button>
             <a
               href={buildProductInquiry(p)}
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="flex-1"
+              aria-label="Send inquiry on WhatsApp"
+              className="shrink-0"
             >
-              <Button variant="whatsapp" size="sm" className="w-full h-9 text-xs">
-                <MessageCircle className="w-3.5 h-3.5" /> Inquiry
+              <Button
+                type="button"
+                variant="whatsapp"
+                size="icon"
+                className="h-9 w-9 rounded-full"
+              >
+                <MessageCircle className="w-4 h-4" />
               </Button>
             </a>
           </div>
