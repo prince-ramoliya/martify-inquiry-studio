@@ -91,61 +91,67 @@ export const Hero = () => {
 
   return (
     <section className="relative" aria-roledescription="carousel">
-      {/* MOBILE: minimal hero */}
+      {/* MOBILE: ultra-minimal hero */}
       <div className="md:hidden relative">
-        <div
-          className="relative w-full h-[62vh] min-h-[420px] overflow-hidden bg-foreground"
-          onTouchStart={() => setPaused(true)}
-        >
-          {slides.map((s, i) => {
-            const shouldRender = i === 0 || i <= index + 1;
-            return (
-              <img
-                key={i}
-                src={shouldRender ? s.image : undefined}
-                alt={s.title}
-                loading={i === 0 ? "eager" : "lazy"}
-                fetchPriority={i === 0 ? "high" : "low"}
-                decoding={i === 0 ? "sync" : "async"}
-                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
-                  i === index ? "opacity-100" : "opacity-0"
-                }`}
-              />
-            );
-          })}
-          <div className="absolute inset-0 bg-gradient-to-t from-foreground/85 via-foreground/40 to-foreground/20" />
+        <Link to={current.to} className="block">
+          <div
+            className="relative w-full h-[46vh] min-h-[300px] max-h-[440px] overflow-hidden bg-foreground"
+            onTouchStart={() => setPaused(true)}
+          >
+            {slides.map((s, i) => {
+              const shouldRender = i === 0 || i <= index + 1;
+              return (
+                <img
+                  key={i}
+                  src={shouldRender ? s.image : undefined}
+                  alt={s.title}
+                  loading={i === 0 ? "eager" : "lazy"}
+                  fetchPriority={i === 0 ? "high" : "low"}
+                  decoding={i === 0 ? "sync" : "async"}
+                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+                    i === index ? "opacity-100" : "opacity-0"
+                  }`}
+                />
+              );
+            })}
+            <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/25 to-transparent" />
 
-          <div className="absolute inset-x-0 bottom-0 p-5 pb-7 text-primary-foreground">
-            <div key={index} className="animate-fade-in-up">
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full glass-dark text-[10px] font-semibold uppercase tracking-[0.18em] mb-3">
-                <Sparkles className="w-3 h-3" />
-                {current.eyebrow}
-              </div>
-              <h1 className="font-display font-extrabold text-3xl leading-[1.05] tracking-tight">
-                {current.title}{" "}
-                <span className="italic font-semibold">{current.italic}</span>
-              </h1>
-              <Link to={current.to} className="block mt-5">
-                <Button variant="hero" size="lg" className="w-full shadow-glow">
-                  {current.cta} <ArrowRight />
-                </Button>
-              </Link>
+            <div className="absolute inset-x-0 bottom-0 px-5 pb-5 text-primary-foreground">
+              <div key={index} className="animate-fade-in-up">
+                <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full glass-dark text-[10px] font-semibold uppercase tracking-[0.18em] mb-2">
+                  <Sparkles className="w-2.5 h-2.5" />
+                  {current.eyebrow}
+                </div>
+                <h1 className="font-display font-extrabold text-2xl leading-[1.1] tracking-tight max-w-[18ch]">
+                  {current.title}{" "}
+                  <span className="italic font-semibold">{current.italic}</span>
+                </h1>
 
-              <div className="flex items-center gap-1.5 mt-4">
-                {slides.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setIndex(i)}
-                    aria-label={`Go to slide ${i + 1}`}
-                    className={`h-1 rounded-full transition-all duration-500 ${
-                      i === index ? "w-8 bg-primary-foreground" : "w-1.5 bg-primary-foreground/40"
-                    }`}
-                  />
-                ))}
+                <div className="flex items-center justify-between mt-4">
+                  <div className="flex items-center gap-1.5">
+                    {slides.map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          setIndex(i);
+                        }}
+                        aria-label={`Go to slide ${i + 1}`}
+                        className={`h-1 rounded-full transition-all duration-500 ${
+                          i === index ? "w-7 bg-primary-foreground" : "w-1.5 bg-primary-foreground/40"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                  <span className="inline-flex items-center gap-1 text-xs font-semibold">
+                    Shop now <ArrowRight className="w-3.5 h-3.5" />
+                  </span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </Link>
       </div>
 
       {/* DESKTOP / TABLET hero (original) */}
