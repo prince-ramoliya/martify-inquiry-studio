@@ -92,10 +92,10 @@ export const Hero = () => {
   return (
     <section className="relative" aria-roledescription="carousel">
       {/* MOBILE: ultra-minimal hero */}
-      <div className="md:hidden relative">
-        <Link to={current.to} className="block">
+      <div className="md:hidden relative bg-background">
+        <Link to={current.to} className="block px-4 pt-3 pb-4">
           <div
-            className="relative w-full h-[46vh] min-h-[300px] max-h-[440px] overflow-hidden bg-foreground"
+            className="relative w-full aspect-[4/5] max-h-[58vh] overflow-hidden rounded-3xl bg-foreground shadow-card"
             onTouchStart={() => setPaused(true)}
           >
             {slides.map((s, i) => {
@@ -114,40 +114,46 @@ export const Hero = () => {
                 />
               );
             })}
-            <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/25 to-transparent" />
 
-            <div className="absolute inset-x-0 bottom-0 px-5 pb-5 text-primary-foreground">
+            {/* Soft bottom gradient only */}
+            <div className="absolute inset-0 bg-gradient-to-t from-foreground/75 via-foreground/10 to-transparent" />
+
+            {/* Tiny eyebrow chip — top */}
+            <div className="absolute top-3 left-3">
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-background/90 backdrop-blur text-foreground text-[10px] font-semibold uppercase tracking-[0.14em]">
+                <Sparkles className="w-2.5 h-2.5 text-primary" />
+                {current.accent || "New"}
+              </span>
+            </div>
+
+            {/* Dots — top right */}
+            <div className="absolute top-3 right-3 flex items-center gap-1">
+              {slides.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setIndex(i);
+                  }}
+                  aria-label={`Go to slide ${i + 1}`}
+                  className={`h-1.5 rounded-full transition-all duration-500 ${
+                    i === index ? "w-5 bg-background" : "w-1.5 bg-background/50"
+                  }`}
+                />
+              ))}
+            </div>
+
+            {/* Title + CTA — bottom */}
+            <div className="absolute inset-x-0 bottom-0 p-4 text-primary-foreground">
               <div key={index} className="animate-fade-in-up">
-                <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full glass-dark text-[10px] font-semibold uppercase tracking-[0.18em] mb-2">
-                  <Sparkles className="w-2.5 h-2.5" />
-                  {current.eyebrow}
-                </div>
-                <h1 className="font-display font-extrabold text-2xl leading-[1.1] tracking-tight max-w-[18ch]">
+                <h1 className="font-display font-extrabold text-[1.5rem] leading-[1.1] tracking-tight max-w-[16ch]">
                   {current.title}{" "}
-                  <span className="italic font-semibold">{current.italic}</span>
+                  <span className="italic font-semibold opacity-95">{current.italic}</span>
                 </h1>
-
-                <div className="flex items-center justify-between mt-4">
-                  <div className="flex items-center gap-1.5">
-                    {slides.map((_, i) => (
-                      <button
-                        key={i}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          setIndex(i);
-                        }}
-                        aria-label={`Go to slide ${i + 1}`}
-                        className={`h-1 rounded-full transition-all duration-500 ${
-                          i === index ? "w-7 bg-primary-foreground" : "w-1.5 bg-primary-foreground/40"
-                        }`}
-                      />
-                    ))}
-                  </div>
-                  <span className="inline-flex items-center gap-1 text-xs font-semibold">
-                    Shop now <ArrowRight className="w-3.5 h-3.5" />
-                  </span>
-                </div>
+                <span className="inline-flex items-center gap-1.5 mt-3 px-3.5 py-1.5 rounded-full bg-background text-foreground text-xs font-semibold shadow-card">
+                  Shop now <ArrowRight className="w-3.5 h-3.5" />
+                </span>
               </div>
             </div>
           </div>
