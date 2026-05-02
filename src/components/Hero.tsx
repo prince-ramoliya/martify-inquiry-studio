@@ -91,10 +91,10 @@ export const Hero = () => {
 
   return (
     <section className="relative" aria-roledescription="carousel">
-      {/* MOBILE: same architecture as desktop, scaled down */}
+      {/* MOBILE: compact hero — half-height, minimal content */}
       <div className="md:hidden relative">
         <div
-          className="relative w-full h-[78vh] min-h-[520px] max-h-[720px] overflow-hidden bg-foreground"
+          className="relative w-full h-[42vh] min-h-[280px] max-h-[380px] overflow-hidden bg-foreground"
           onTouchStart={() => setPaused(true)}
         >
           {slides.map((s, i) => {
@@ -107,72 +107,37 @@ export const Hero = () => {
                 loading={i === 0 ? "eager" : "lazy"}
                 fetchPriority={i === 0 ? "high" : "low"}
                 decoding={i === 0 ? "sync" : "async"}
-                className={`absolute inset-0 w-full h-full object-cover transition-all duration-[1400ms] ease-out ${
+                className={`absolute inset-0 w-full h-full object-cover transition-all duration-[1200ms] ease-out ${
                   i === index ? "opacity-100 scale-100" : "opacity-0 scale-105"
                 }`}
               />
             );
           })}
 
-          {/* Legibility overlays */}
-          <div className="absolute inset-0 bg-gradient-to-r from-foreground/85 via-foreground/55 to-foreground/25" />
-          <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-transparent to-foreground/35" />
+          {/* Single soft overlay for legibility */}
+          <div className="absolute inset-0 bg-gradient-to-t from-foreground/75 via-foreground/30 to-transparent" />
 
-          {/* Top bar */}
-          <div className="absolute top-0 inset-x-0 z-10">
-            <div className="container-page pt-5 flex items-center justify-between text-primary-foreground">
-              <div className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.2em]">
-                <span className="w-6 h-px bg-primary-foreground/70" />
-                Surat · Est. 2019
-              </div>
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full glass-dark">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-[10px] font-semibold">Open · 9 AM – 10 PM</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Content */}
-          <div className="absolute inset-0 z-10 flex items-end">
-            <div className="container-page w-full pb-9">
-              <div key={index} className="max-w-md text-primary-foreground animate-fade-in-up">
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full glass-dark text-[10px] font-semibold uppercase tracking-[0.18em] mb-3">
+          {/* Content — bottom-anchored, condensed */}
+          <div className="absolute inset-x-0 bottom-0 z-10">
+            <div className="container-page pb-5">
+              <div key={index} className="text-primary-foreground animate-fade-in-up">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full glass-dark text-[10px] font-semibold uppercase tracking-[0.18em] mb-2.5">
                   <Sparkles className="w-3 h-3" />
                   {current.eyebrow}
                 </div>
-                <h1 className="font-display font-extrabold text-[2rem] leading-[1.05] tracking-tight">
-                  {current.title}
-                  <br />
+                <h1 className="font-display font-extrabold text-[1.625rem] leading-[1.1] tracking-tight max-w-[14ch]">
+                  {current.title}{" "}
                   <span className="italic font-semibold">{current.italic}</span>
                 </h1>
-                <p className="text-sm text-primary-foreground/85 leading-relaxed mt-3 line-clamp-3">
-                  {current.description}
-                </p>
 
-                <div className="flex items-center gap-2 mt-5">
-                  <Link to={current.to} className="flex-1">
-                    <Button variant="hero" size="lg" className="w-full shadow-glow">
+                <div className="flex items-center justify-between gap-3 mt-4">
+                  <Link to={current.to}>
+                    <Button variant="hero" size="sm" className="shadow-glow h-10 px-5">
                       {current.cta} <ArrowRight />
                     </Button>
                   </Link>
-                  <a
-                    href={settings?.whatsapp_number ? `https://wa.me/${settings.whatsapp_number}?text=${encodeURIComponent("Hello, I'd like to know more.")}` : buildWhatsAppLink("Hello MARTIFY, I'd like to know more.")}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Chat on WhatsApp"
-                  >
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="h-12 w-12 bg-background/10 backdrop-blur-md border-primary-foreground/40 text-primary-foreground hover:bg-background hover:text-foreground"
-                    >
-                      <MessageCircle />
-                    </Button>
-                  </a>
-                </div>
 
-                {/* Slide indicators */}
-                <div className="flex items-center gap-3 mt-6">
+                  {/* Slide dots */}
                   <div className="flex items-center gap-1.5">
                     {slides.map((_, i) => (
                       <button
@@ -180,14 +145,11 @@ export const Hero = () => {
                         onClick={() => setIndex(i)}
                         aria-label={`Go to slide ${i + 1}`}
                         className={`h-1 rounded-full transition-all duration-500 ${
-                          i === index ? "w-8 bg-primary-foreground" : "w-2 bg-primary-foreground/40"
+                          i === index ? "w-6 bg-primary-foreground" : "w-1.5 bg-primary-foreground/40"
                         }`}
                       />
                     ))}
                   </div>
-                  <span className="text-[10px] font-grotesk font-medium text-primary-foreground/70 tabular-nums">
-                    {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
-                  </span>
                 </div>
               </div>
             </div>

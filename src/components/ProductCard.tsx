@@ -1,28 +1,16 @@
-import { Heart, MessageCircle, ShoppingCart } from "lucide-react";
+import { Heart, MessageCircle } from "lucide-react";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
+import { AddToCartButton } from "./AddToCartButton";
 import { buildProductInquiry, formatPrice, type Product } from "@/data/products";
-import { useCart, useWishlist } from "@/store/cart";
-import { flyToCart } from "@/lib/flyToCart";
+import { useWishlist } from "@/store/cart";
 
 export const ProductCard = ({ p, i = 0 }: { p: Product; i?: number }) => {
   const imgRef = useRef<HTMLImageElement>(null);
-  const addItem = useCart((s) => s.addItem);
   const wishHas = useWishlist((s) => s.ids.includes(p.id));
   const wishToggle = useWishlist((s) => s.toggle);
-
-  const handleAdd = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    flyToCart(imgRef.current);
-    addItem(p);
-    toast.success(`${p.name} added to cart`, {
-      description: formatPrice(p.price),
-      action: { label: "View cart", onClick: () => (window.location.href = "/cart") },
-    });
-  };
 
   const handleWish = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -63,25 +51,8 @@ export const ProductCard = ({ p, i = 0 }: { p: Product; i?: number }) => {
           >
             <Heart className={`w-4 h-4 ${wishHas ? "fill-current" : ""}`} />
           </button>
-
-          {/* Desktop hover actions */}
-          <div className="hidden md:flex absolute inset-x-3 bottom-3 gap-2 opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-            <Button variant="hero" size="sm" className="flex-1" onClick={handleAdd}>
-              <ShoppingCart className="w-4 h-4" /> Add
-            </Button>
-            <a
-              href={buildProductInquiry(p)}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="flex-1"
-            >
-              <Button variant="whatsapp" size="sm" className="w-full">
-                <MessageCircle className="w-4 h-4" />
-              </Button>
-            </a>
-          </div>
         </div>
+
         <div className="p-4 lg:p-5">
           <div className="text-xs text-muted-foreground mb-1">{p.category}</div>
           <h3 className="font-display font-semibold text-base leading-snug line-clamp-1">{p.name}</h3>
@@ -92,17 +63,11 @@ export const ProductCard = ({ p, i = 0 }: { p: Product; i?: number }) => {
             )}
           </div>
 
-          {/* Mobile-only persistent actions */}
-          <div className="md:hidden mt-3 flex items-stretch gap-2 w-full">
-            <Button
-              variant="hero"
-              size="sm"
-              className="flex-1 min-w-0 h-9 px-2 text-xs gap-1"
-              onClick={handleAdd}
-            >
-              <ShoppingCart className="w-3.5 h-3.5 shrink-0" />
-              <span className="truncate">Add</span>
-            </Button>
+          {/* Blinkit-style ADD / stepper + inquiry */}
+          <div className="mt-3 flex items-stretch gap-2 w-full">
+            <div className="flex-1 min-w-0">
+              <AddToCartButton product={p} imageRef={imgRef} />
+            </div>
             <a
               href={buildProductInquiry(p)}
               target="_blank"
@@ -115,7 +80,7 @@ export const ProductCard = ({ p, i = 0 }: { p: Product; i?: number }) => {
                 type="button"
                 variant="whatsapp"
                 size="icon"
-                className="h-9 w-9 rounded-full"
+                className="h-9 w-9 rounded-xl"
               >
                 <MessageCircle className="w-4 h-4" />
               </Button>
