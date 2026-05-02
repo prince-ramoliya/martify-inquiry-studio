@@ -268,6 +268,7 @@ export const Hero = () => {
           <span className="text-xs font-grotesk font-bold">4.9 · 2,400+</span>
         </div>
       </div>
+      </div>
 
       {/* Infinite marquee strip */}
       <div className="border-y border-border bg-background">
