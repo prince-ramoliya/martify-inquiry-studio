@@ -64,7 +64,8 @@ export const ProductCard = ({ p, i = 0 }: { p: Product; i?: number }) => {
             <Heart className={`w-4 h-4 ${wishHas ? "fill-current" : ""}`} />
           </button>
 
-          <div className="absolute inset-x-3 bottom-3 flex gap-2 opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+          {/* Desktop hover actions */}
+          <div className="hidden md:flex absolute inset-x-3 bottom-3 gap-2 opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
             <Button variant="hero" size="sm" className="flex-1" onClick={handleAdd}>
               <ShoppingCart className="w-4 h-4" /> Add
             </Button>
@@ -89,6 +90,24 @@ export const ProductCard = ({ p, i = 0 }: { p: Product; i?: number }) => {
             {p.mrp && p.mrp > p.price && (
               <span className="text-xs text-muted-foreground line-through">{formatPrice(p.mrp)}</span>
             )}
+          </div>
+
+          {/* Mobile-only persistent actions */}
+          <div className="md:hidden mt-3 flex gap-2">
+            <Button variant="hero" size="sm" className="flex-1 h-9 text-xs" onClick={handleAdd}>
+              <ShoppingCart className="w-3.5 h-3.5" /> Add
+            </Button>
+            <a
+              href={buildProductInquiry(p)}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="flex-1"
+            >
+              <Button variant="whatsapp" size="sm" className="w-full h-9 text-xs">
+                <MessageCircle className="w-3.5 h-3.5" /> Inquiry
+              </Button>
+            </a>
           </div>
         </div>
       </Link>
