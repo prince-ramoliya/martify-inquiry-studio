@@ -18,7 +18,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
           toast:
             "group pointer-events-auto flex items-center gap-3 w-full max-w-[92vw] sm:max-w-md " +
             "rounded-2xl border border-border/60 bg-background/85 backdrop-blur-xl " +
-            "px-4 py-3 shadow-[0_10px_40px_-10px_hsl(var(--foreground)/0.25)] " +
+            "px-4 py-0 my-[17px] shadow-[0_10px_40px_-10px_hsl(var(--foreground)/0.25)] " +
             "text-foreground",
           title: "text-sm font-semibold font-display leading-tight",
           description: "text-xs text-muted-foreground leading-snug mt-0.5",
