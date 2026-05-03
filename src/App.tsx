@@ -59,42 +59,78 @@ const queryClient = new QueryClient({
 
 const RouteFallback = () => <div className="min-h-[40vh]" aria-hidden />;
 
+const useChunkErrorRecovery = () => {
+  useEffect(() => {
+    const KEY = "__chunk_reload_at__";
+    const isChunkErr = (msg: string) =>
+      /Loading chunk [\d]+ failed/i.test(msg) ||
+      /Failed to fetch dynamically imported module/i.test(msg) ||
+      /Importing a module script failed/i.test(msg);
+    const maybeReload = (msg: string) => {
+      if (!isChunkErr(msg)) return;
+      const last = Number(sessionStorage.getItem(KEY) ?? 0);
+      if (Date.now() - last > 60_000) {
+        sessionStorage.setItem(KEY, String(Date.now()));
+        window.location.reload();
+      }
+    };
+    const onErr = (e: ErrorEvent) => maybeReload(e.message ?? "");
+    const onRej = (e: PromiseRejectionEvent) =>
+      maybeReload((e.reason as { message?: string })?.message ?? String(e.reason ?? ""));
+    window.addEventListener("error", onErr);
+    window.addEventListener("unhandledrejection", onRej);
+    return () => {
+      window.removeEventListener("error", onErr);
+      window.removeEventListener("unhandledrejection", onRej);
+    };
+  }, []);
+};
+
+const AppShell = () => {
+  useChunkErrorRecovery();
+  return (
+    <BrowserRouter>
+      <AuthProvider>
+        <Suspense fallback={<RouteFallback />}>
+          <Routes>
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin/setup" element={<AdminSetup />} />
+            <Route path="/admin" element={<AdminGuard><AdminLayout /></AdminGuard>}>
+              <Route index element={<AdminDashboard />} />
+              <Route path="hero" element={<AdminHero />} />
+              <Route path="categories" element={<AdminCategories />} />
+              <Route path="products" element={<AdminProducts />} />
+              <Route path="settings" element={<AdminSettings />} />
+            </Route>
+            <Route element={<Layout />}>
+              <Route path="/" element={<Index />} />
+              <Route path="/shop" element={<Shop />} />
+              <Route path="/category/:slug" element={<CategoryPage />} />
+              <Route path="/product/:slug" element={<ProductDetail />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/wishlist" element={<Wishlist />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/faq" element={<FAQ />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Routes>
+        </Suspense>
+      </AuthProvider>
+    </BrowserRouter>
+  );
+};
+
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner position="top-center" />
-      <BrowserRouter>
-        <AuthProvider>
-          <Suspense fallback={<RouteFallback />}>
-            <Routes>
-              <Route path="/admin/login" element={<AdminLogin />} />
-              <Route path="/admin/setup" element={<AdminSetup />} />
-              <Route path="/admin" element={<AdminGuard><AdminLayout /></AdminGuard>}>
-                <Route index element={<AdminDashboard />} />
-                <Route path="hero" element={<AdminHero />} />
-                <Route path="categories" element={<AdminCategories />} />
-                <Route path="products" element={<AdminProducts />} />
-                <Route path="settings" element={<AdminSettings />} />
-              </Route>
-              <Route element={<Layout />}>
-                <Route path="/" element={<Index />} />
-                <Route path="/shop" element={<Shop />} />
-                <Route path="/category/:slug" element={<CategoryPage />} />
-                <Route path="/product/:slug" element={<ProductDetail />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/wishlist" element={<Wishlist />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/faq" element={<FAQ />} />
-                <Route path="*" element={<NotFound />} />
-              </Route>
-            </Routes>
-          </Suspense>
-        </AuthProvider>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <ErrorBoundary>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner position="top-center" />
+        <AppShell />
+      </TooltipProvider>
+    </QueryClientProvider>
+  </ErrorBoundary>
 );
 
 export default App;
