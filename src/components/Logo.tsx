@@ -27,7 +27,7 @@ export const Logo = ({ variant = "default" }: { variant?: "default" | "light" })
       <img
         src={src}
         alt={settings?.brand_name ?? "MARTIFY"}
-        className={`h-9 sm:h-10 md:h-11 w-auto transition-spring group-hover:scale-[1.03] ${isLight ? "brightness-0 invert" : ""}`}
+        className={`h-12 sm:h-11 md:h-12 w-auto transition-spring group-hover:scale-[1.03] ${isLight ? "brightness-0 invert" : ""}`}
         width={196}
         height={54}
       />
