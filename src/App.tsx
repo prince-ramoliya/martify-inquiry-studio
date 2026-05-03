@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -7,7 +7,30 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Layout } from "@/components/Layout";
 import { AuthProvider } from "@/hooks/useAuth";
 import { AdminGuard } from "@/components/AdminGuard";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import Index from "./pages/Index";
+
+/**
+ * Wrap React.lazy with a small retry helper so transient network blips
+ * (or stale chunks immediately after a deploy) don't blank the page.
+ */
+const lazyWithRetry = <T extends { default: React.ComponentType<unknown> }>(
+  factory: () => Promise<T>,
+  retries = 2,
+  delayMs = 400,
+) =>
+  lazy(async () => {
+    let lastErr: unknown;
+    for (let i = 0; i <= retries; i++) {
+      try {
+        return await factory();
+      } catch (err) {
+        lastErr = err;
+        await new Promise((r) => setTimeout(r, delayMs * (i + 1)));
+      }
+    }
+    throw lastErr;
+  });
 
 // Lazy-load every non-home route to keep the initial JS bundle tiny.
 const Shop = lazy(() => import("./pages/Shop"));
