@@ -33,23 +33,23 @@ const lazyWithRetry = <T extends { default: React.ComponentType<unknown> }>(
   });
 
 // Lazy-load every non-home route to keep the initial JS bundle tiny.
-const Shop = lazy(() => import("./pages/Shop"));
-const CategoryPage = lazy(() => import("./pages/CategoryPage"));
-const ProductDetail = lazy(() => import("./pages/ProductDetail"));
-const Cart = lazy(() => import("./pages/Cart"));
-const Wishlist = lazy(() => import("./pages/Wishlist"));
-const About = lazy(() => import("./pages/About"));
-const Contact = lazy(() => import("./pages/Contact"));
-const FAQ = lazy(() => import("./pages/FAQ"));
-const NotFound = lazy(() => import("./pages/NotFound"));
-const AdminLogin = lazy(() => import("./pages/admin/AdminLogin"));
-const AdminSetup = lazy(() => import("./pages/admin/AdminSetup"));
-const AdminLayout = lazy(() => import("@/components/admin/AdminLayout").then((m) => ({ default: m.AdminLayout })));
-const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
-const AdminHero = lazy(() => import("./pages/admin/AdminHero"));
-const AdminCategories = lazy(() => import("./pages/admin/AdminCategories"));
-const AdminProducts = lazy(() => import("./pages/admin/AdminProducts"));
-const AdminSettings = lazy(() => import("./pages/admin/AdminSettings"));
+const Shop = lazyWithRetry(() => import("./pages/Shop"));
+const CategoryPage = lazyWithRetry(() => import("./pages/CategoryPage"));
+const ProductDetail = lazyWithRetry(() => import("./pages/ProductDetail"));
+const Cart = lazyWithRetry(() => import("./pages/Cart"));
+const Wishlist = lazyWithRetry(() => import("./pages/Wishlist"));
+const About = lazyWithRetry(() => import("./pages/About"));
+const Contact = lazyWithRetry(() => import("./pages/Contact"));
+const FAQ = lazyWithRetry(() => import("./pages/FAQ"));
+const NotFound = lazyWithRetry(() => import("./pages/NotFound"));
+const AdminLogin = lazyWithRetry(() => import("./pages/admin/AdminLogin"));
+const AdminSetup = lazyWithRetry(() => import("./pages/admin/AdminSetup"));
+const AdminLayout = lazyWithRetry(() => import("@/components/admin/AdminLayout").then((m) => ({ default: m.AdminLayout })));
+const AdminDashboard = lazyWithRetry(() => import("./pages/admin/AdminDashboard"));
+const AdminHero = lazyWithRetry(() => import("./pages/admin/AdminHero"));
+const AdminCategories = lazyWithRetry(() => import("./pages/admin/AdminCategories"));
+const AdminProducts = lazyWithRetry(() => import("./pages/admin/AdminProducts"));
+const AdminSettings = lazyWithRetry(() => import("./pages/admin/AdminSettings"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
