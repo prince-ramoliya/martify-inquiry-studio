@@ -80,6 +80,7 @@ export const Hero = () => {
   useEffect(() => {
     let cancelled = false;
     let idleId = 0;
+    let timerId: ReturnType<typeof setTimeout> | null = null;
     const loadContent = async () => {
       try {
         const { supabase } = await import("@/integrations/supabase/client");
@@ -108,12 +109,12 @@ export const Hero = () => {
     if ("requestIdleCallback" in window) {
       idleId = window.requestIdleCallback(loadContent, { timeout: 2500 });
     } else {
-      idleId = globalThis.setTimeout(loadContent, 1200);
+      timerId = setTimeout(loadContent, 1200);
     }
     return () => {
       cancelled = true;
       if ("cancelIdleCallback" in window) window.cancelIdleCallback(idleId);
-      else globalThis.clearTimeout(idleId);
+      if (timerId) clearTimeout(timerId);
     };
   }, []);
 
