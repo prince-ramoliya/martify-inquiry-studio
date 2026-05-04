@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
 // ===== Types matching DB =====
@@ -24,34 +24,41 @@ export type DbSettings = {
   promo_banner_subtitle: string; promo_banner_cta: string; promo_banner_to: string;
 };
 
-function useRealtimeTable<T>(table: string, order: string, opts?: { activeOnly?: boolean }) {
+function useRealtimeTable<T>(table: string, order: string, opts?: { activeOnly?: boolean; realtime?: boolean }) {
   const [rows, setRows] = useState<T[]>([]);
   const [loading, setLoading] = useState(true);
+  const activeOnly = opts?.activeOnly ?? false;
+  const realtime = opts?.realtime ?? true;
+
+  const fetchRows = useCallback(async () => {
+    let q: any = (supabase as any).from(table).select("*").order(order, { ascending: true });
+    if (activeOnly) q = q.eq("active", true);
+    return q;
+  }, [table, order, activeOnly]);
 
   useEffect(() => {
     let mounted = true;
     const fetch = async () => {
-      let q: any = (supabase as any).from(table).select("*").order(order, { ascending: true });
-      if (opts?.activeOnly) q = q.eq("active", true);
-      const { data } = await q;
+      const { data } = await fetchRows();
       if (mounted) { setRows((data ?? []) as T[]); setLoading(false); }
     };
     fetch();
+    if (!realtime) return () => { mounted = false; };
     const ch = supabase.channel(`rt:${table}:${Math.random().toString(36).slice(2)}`);
     ch.on("postgres_changes", { event: "*", schema: "public", table }, () => fetch())
       .subscribe();
     return () => { mounted = false; supabase.removeChannel(ch); };
-  }, [table, order, opts?.activeOnly]);
+  }, [fetchRows, realtime, table]);
 
   return { rows, loading };
 }
 
-export const useHeroSlides = (activeOnly = false) =>
-  useRealtimeTable<DbHeroSlide>("hero_slides", "position", { activeOnly });
-export const useCategories = (activeOnly = false) =>
-  useRealtimeTable<DbCategory>("categories", "position", { activeOnly });
-export const useProducts = (activeOnly = false) =>
-  useRealtimeTable<DbProduct>("products", "position", { activeOnly });
+export const useHeroSlides = (activeOnly = false, realtime = true) =>
+  useRealtimeTable<DbHeroSlide>("hero_slides", "position", { activeOnly, realtime });
+export const useCategories = (activeOnly = false, realtime = true) =>
+  useRealtimeTable<DbCategory>("categories", "position", { activeOnly, realtime });
+export const useProducts = (activeOnly = false, realtime = true) =>
+  useRealtimeTable<DbProduct>("products", "position", { activeOnly, realtime });
 
 export function useSiteSettings() {
   const [settings, setSettings] = useState<DbSettings | null>(null);
