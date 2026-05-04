@@ -39,7 +39,11 @@ const FAQ = lazyWithRetry(() => import("./pages/FAQ"));
 const NotFound = lazyWithRetry(() => import("./pages/NotFound"));
 const AdminRoutes = lazyWithRetry(() => import("./pages/admin/AdminRoutes"));
 
-const RouteFallback = () => <div className="min-h-[40vh]" aria-hidden />;
+const RouteFallback = () => (
+  <div className="min-h-[55vh] grid place-items-center bg-background" aria-label="Loading MARTIFY">
+    <div className="h-11 w-11 rounded-full border-2 border-muted border-t-primary animate-spin" />
+  </div>
+);
 
 const useChunkErrorRecovery = () => {
   useEffect(() => {
