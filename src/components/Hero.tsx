@@ -108,12 +108,12 @@ export const Hero = () => {
     if ("requestIdleCallback" in window) {
       idleId = window.requestIdleCallback(loadContent, { timeout: 2500 });
     } else {
-      idleId = window.setTimeout(loadContent, 1200);
+      idleId = globalThis.setTimeout(loadContent, 1200);
     }
     return () => {
       cancelled = true;
       if ("cancelIdleCallback" in window) window.cancelIdleCallback(idleId);
-      else window.clearTimeout(idleId);
+      else globalThis.clearTimeout(idleId);
     };
   }, []);
 
