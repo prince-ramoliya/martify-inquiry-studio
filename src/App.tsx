@@ -1,12 +1,7 @@
 import { lazy, Suspense, useEffect } from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
-import { Toaster } from "@/components/ui/toaster";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { Layout } from "@/components/Layout";
-import { AuthProvider } from "@/hooks/useAuth";
-import { AdminGuard } from "@/components/AdminGuard";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import Index from "./pages/Index";
 
@@ -42,20 +37,7 @@ const About = lazyWithRetry(() => import("./pages/About"));
 const Contact = lazyWithRetry(() => import("./pages/Contact"));
 const FAQ = lazyWithRetry(() => import("./pages/FAQ"));
 const NotFound = lazyWithRetry(() => import("./pages/NotFound"));
-const AdminLogin = lazyWithRetry(() => import("./pages/admin/AdminLogin"));
-const AdminSetup = lazyWithRetry(() => import("./pages/admin/AdminSetup"));
-const AdminLayout = lazyWithRetry(() => import("@/components/admin/AdminLayout").then((m) => ({ default: m.AdminLayout })));
-const AdminDashboard = lazyWithRetry(() => import("./pages/admin/AdminDashboard"));
-const AdminHero = lazyWithRetry(() => import("./pages/admin/AdminHero"));
-const AdminCategories = lazyWithRetry(() => import("./pages/admin/AdminCategories"));
-const AdminProducts = lazyWithRetry(() => import("./pages/admin/AdminProducts"));
-const AdminSettings = lazyWithRetry(() => import("./pages/admin/AdminSettings"));
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: { staleTime: 60_000, refetchOnWindowFocus: false },
-  },
-});
+const AdminRoutes = lazyWithRetry(() => import("./pages/admin/AdminRoutes"));
 
 const RouteFallback = () => <div className="min-h-[40vh]" aria-hidden />;
 
@@ -90,46 +72,31 @@ const AppShell = () => {
   useChunkErrorRecovery();
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <Suspense fallback={<RouteFallback />}>
-          <Routes>
-            <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/admin/setup" element={<AdminSetup />} />
-            <Route path="/admin" element={<AdminGuard><AdminLayout /></AdminGuard>}>
-              <Route index element={<AdminDashboard />} />
-              <Route path="hero" element={<AdminHero />} />
-              <Route path="categories" element={<AdminCategories />} />
-              <Route path="products" element={<AdminProducts />} />
-              <Route path="settings" element={<AdminSettings />} />
-            </Route>
-            <Route element={<Layout />}>
-              <Route path="/" element={<Index />} />
-              <Route path="/shop" element={<Shop />} />
-              <Route path="/category/:slug" element={<CategoryPage />} />
-              <Route path="/product/:slug" element={<ProductDetail />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/wishlist" element={<Wishlist />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/faq" element={<FAQ />} />
-              <Route path="*" element={<NotFound />} />
-            </Route>
-          </Routes>
-        </Suspense>
-      </AuthProvider>
+      <Suspense fallback={<RouteFallback />}>
+        <Routes>
+          <Route path="/admin/*" element={<AdminRoutes />} />
+          <Route element={<Layout />}>
+            <Route path="/" element={<Index />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/category/:slug" element={<CategoryPage />} />
+            <Route path="/product/:slug" element={<ProductDetail />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 };
 
 const App = () => (
   <ErrorBoundary>
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner position="top-center" />
-        <AppShell />
-      </TooltipProvider>
-    </QueryClientProvider>
+    <Sonner position="top-center" />
+    <AppShell />
   </ErrorBoundary>
 );
 
