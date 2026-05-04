@@ -14,16 +14,24 @@
 
     <meta name="twitter:card" content="summary_large_image" />
 
-    <!-- Preconnect to backend & gateway for faster TTFB -->
-    <link rel="preconnect" href="https://gukrutoozmxqfzzligze.supabase.co" crossorigin />
-    <link rel="dns-prefetch" href="https://gukrutoozmxqfzzligze.supabase.co" />
+    <!-- Fast font loading without blocking first paint -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap" /></noscript>
 
     <!-- Preload LCP hero image -->
     <link rel="preload" as="image" href="/src/assets/hero-banner-1.webp" fetchpriority="high" />
   </head>
 
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div style="min-height:100vh;background:#fff;font-family:Manrope,system-ui,sans-serif;display:grid;place-items:center;color:#0f172a">
+        <div style="width:52px;height:52px;border-radius:999px;border:3px solid #e5e7eb;border-top-color:#1d4ed8;animation:martify-spin .8s linear infinite"></div>
+      </div>
+    </div>
+    <style>@keyframes martify-spin{to{transform:rotate(360deg)}}</style>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

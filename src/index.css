@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -105,19 +103,19 @@
   }
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Poppins', system-ui, sans-serif;
+    font-family: 'Manrope', system-ui, sans-serif;
   }
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Poppins', system-ui, sans-serif;
+    font-family: 'Manrope', system-ui, sans-serif;
     @apply tracking-tight;
     font-weight: 700;
   }
 }
 
 @layer utilities {
-  .font-display { font-family: 'Poppins', system-ui, sans-serif; letter-spacing: -0.02em; }
-  .font-grotesk { font-family: 'Poppins', system-ui, sans-serif; }
-  .font-sans { font-family: 'Poppins', system-ui, sans-serif; }
+  .font-display { font-family: 'Manrope', system-ui, sans-serif; letter-spacing: -0.02em; }
+  .font-grotesk { font-family: 'Manrope', system-ui, sans-serif; }
+  .font-sans { font-family: 'Manrope', system-ui, sans-serif; }
 
   .bg-gradient-hero { background: var(--gradient-hero); }
   .bg-gradient-soft { background: var(--gradient-soft); }

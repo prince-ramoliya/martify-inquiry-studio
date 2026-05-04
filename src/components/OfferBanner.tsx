@@ -98,7 +98,7 @@ export const OfferBanner = () => {
           aria-roledescription="carousel"
         >
           <div
-            className="flex transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]"
+            className="flex transition-transform duration-700 ease-in-out"
             style={{ transform: `translateX(-${index * 100}%)` }}
           >
             {banners.map((b, i) => {
