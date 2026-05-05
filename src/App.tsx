@@ -37,7 +37,7 @@ const Contact = lazyWithRetry(() => import("./pages/Contact"));
 const FAQ = lazyWithRetry(() => import("./pages/FAQ"));
 const NotFound = lazyWithRetry(() => import("./pages/NotFound"));
 const AdminRoutes = lazyWithRetry(() => import("./pages/admin/AdminRoutes"));
-const Sonner = lazyWithRetry(() => import("@/components/ui/sonner").then((m) => ({ default: m.Toaster })));
+const Sonner = lazyWithRetry(() => import("@/components/ui/sonner").then((m) => ({ default: () => <m.Toaster position="top-center" /> })));
 
 const RouteFallback = () => (
   <div className="min-h-[55vh] grid place-items-center bg-background" aria-label="Loading MARTIFY">
@@ -97,7 +97,7 @@ const DeferredToaster = () => {
   if (!show) return null;
   return (
     <Suspense fallback={null}>
-      <Sonner position="top-center" />
+      <Sonner />
     </Suspense>
   );
 };
