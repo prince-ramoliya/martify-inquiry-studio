@@ -2,7 +2,8 @@ import { Facebook, Instagram, Mail, MapPin, MessageCircle, Phone, Twitter, Youtu
 import { Link } from "react-router-dom";
 import { Logo } from "./Logo";
 import { Button } from "./ui/button";
-import { WHATSAPP_NUMBER, buildWhatsAppLink, categories } from "@/data/products";
+import { categories } from "@/data/catalog";
+import { WHATSAPP_NUMBER, buildWhatsAppLink } from "@/data/commerce";
 
 export const Footer = () => {
   return (
