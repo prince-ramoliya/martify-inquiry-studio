@@ -1,4 +1,4 @@
-import { categories, imageByCategory, type Category } from "./catalog";
+import { categories, imageByCategory } from "./catalog";
 
 // Unique product imagery
 import p1 from "@/assets/products/p1-blender.webp";
