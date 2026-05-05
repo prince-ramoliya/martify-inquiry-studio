@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { useCart } from "@/store/cart";
 import { flyToCart } from "@/lib/flyToCart";
 import type { Product } from "@/data/products";
-import { formatPrice } from "@/data/products";
+import { formatPrice } from "@/data/commerce";
 import { cn } from "@/lib/utils";
 
 type Props = {
