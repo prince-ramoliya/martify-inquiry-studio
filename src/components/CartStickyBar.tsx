@@ -1,7 +1,7 @@
 import { ShoppingBag, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useCart } from "@/store/cart";
-import { formatPrice } from "@/data/products";
+import { formatPrice } from "@/data/commerce";
 
 /**
  * Blinkit-style sticky "view cart" bar — mobile only.

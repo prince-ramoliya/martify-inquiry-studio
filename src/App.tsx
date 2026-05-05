@@ -1,6 +1,5 @@
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Layout } from "@/components/Layout";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import Index from "./pages/Index";
@@ -38,6 +37,7 @@ const Contact = lazyWithRetry(() => import("./pages/Contact"));
 const FAQ = lazyWithRetry(() => import("./pages/FAQ"));
 const NotFound = lazyWithRetry(() => import("./pages/NotFound"));
 const AdminRoutes = lazyWithRetry(() => import("./pages/admin/AdminRoutes"));
+const Sonner = lazyWithRetry(() => import("@/components/ui/sonner").then((m) => ({ default: () => <m.Toaster position="top-center" /> })));
 
 const RouteFallback = () => (
   <div className="min-h-[55vh] grid place-items-center bg-background" aria-label="Loading MARTIFY">
@@ -54,10 +54,10 @@ const useChunkErrorRecovery = () => {
       /Importing a module script failed/i.test(msg);
     const maybeReload = (msg: string) => {
       if (!isChunkErr(msg)) return;
-      const last = Number(sessionStorage.getItem(KEY) ?? 0);
+      const last = Number(safeSessionGet(KEY) ?? 0);
       if (Date.now() - last > 60_000) {
-        sessionStorage.setItem(KEY, String(Date.now()));
-        window.location.reload();
+        safeSessionSet(KEY, String(Date.now()));
+        reloadWithFreshUrl();
       }
     };
     const onErr = (e: ErrorEvent) => maybeReload(e.message ?? "");
@@ -70,6 +70,36 @@ const useChunkErrorRecovery = () => {
       window.removeEventListener("unhandledrejection", onRej);
     };
   }, []);
+};
+
+const safeSessionGet = (key: string) => {
+  try { return window.sessionStorage.getItem(key); } catch { return null; }
+};
+
+const safeSessionSet = (key: string, value: string) => {
+  try { window.sessionStorage.setItem(key, value); } catch { /* no-op */ }
+};
+
+const reloadWithFreshUrl = () => {
+  const url = new URL(window.location.href);
+  url.searchParams.set("martify_reload", String(Date.now()));
+  window.location.replace(url.toString());
+};
+
+const DeferredToaster = () => {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    const id = window.setTimeout(() => setShow(true), 700);
+    return () => window.clearTimeout(id);
+  }, []);
+
+  if (!show) return null;
+  return (
+    <Suspense fallback={null}>
+      <Sonner />
+    </Suspense>
+  );
 };
 
 const AppShell = () => {
@@ -99,7 +129,7 @@ const AppShell = () => {
 
 const App = () => (
   <ErrorBoundary>
-    <Sonner position="top-center" />
+    <DeferredToaster />
     <AppShell />
   </ErrorBoundary>
 );

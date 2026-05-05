@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { Hero } from "@/components/Hero";
 import { Seo } from "@/components/Seo";
 
@@ -13,6 +13,37 @@ const SectionFallback = ({ h = "30vh" }: { h?: string }) => (
   <div style={{ minHeight: h }} aria-hidden />
 );
 
+const DeferredHomeSections = () => {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    const id = window.setTimeout(() => setShow(true), 350);
+    return () => window.clearTimeout(id);
+  }, []);
+
+  if (!show) return null;
+
+  return (
+    <>
+      <Suspense fallback={<SectionFallback h="40vh" />}>
+        <Categories />
+      </Suspense>
+      <Suspense fallback={<SectionFallback h="60vh" />}>
+        <FeaturedProducts />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <WhyChoose />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <PromoBanner />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <Testimonials />
+      </Suspense>
+    </>
+  );
+};
+
 const Index = () => (
   <>
     <Seo
@@ -20,21 +51,7 @@ const Index = () => (
       description="Curated supermarket from Surat — beauty, kitchen, decor, electronics, stationary, toys. Browse, save & inquire on WhatsApp."
     />
     <Hero />
-    <Suspense fallback={<SectionFallback h="40vh" />}>
-      <Categories />
-    </Suspense>
-    <Suspense fallback={<SectionFallback h="60vh" />}>
-      <FeaturedProducts />
-    </Suspense>
-    <Suspense fallback={<SectionFallback />}>
-      <WhyChoose />
-    </Suspense>
-    <Suspense fallback={<SectionFallback />}>
-      <PromoBanner />
-    </Suspense>
-    <Suspense fallback={<SectionFallback />}>
-      <Testimonials />
-    </Suspense>
+    <DeferredHomeSections />
   </>
 );
 

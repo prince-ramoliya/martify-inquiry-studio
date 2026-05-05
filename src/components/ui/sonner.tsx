@@ -1,12 +1,9 @@
-import { useTheme } from "next-themes";
 import { Toaster as Sonner, toast } from "sonner";
 import { CheckCircle2, AlertCircle, AlertTriangle, Info, Loader2 } from "lucide-react";
 
 type ToasterProps = React.ComponentProps<typeof Sonner>;
 
 const Toaster = ({ ...props }: ToasterProps) => {
-  const { theme = "system" } = useTheme();
-
   return (
     <>
       {/* Premium, jank-free enter/exit motion (GPU-only transforms) */}
@@ -37,7 +34,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
       `}</style>
 
       <Sonner
-        theme={theme as ToasterProps["theme"]}
+        theme="light"
         className="toaster group"
         offset={16}
         gap={10}
