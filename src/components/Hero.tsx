@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import banner1 from "@/assets/hero-banner-1.webp";
 import banner2 from "@/assets/hero-banner-2.webp";
 import banner3 from "@/assets/hero-banner-3.webp";
-import { buildWhatsAppLink } from "@/data/products";
+import { buildWhatsAppLink } from "@/data/commerce";
 
 type Slide = {
   eyebrow: string;
