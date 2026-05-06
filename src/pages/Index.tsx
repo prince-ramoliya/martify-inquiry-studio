@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { Hero } from "@/components/Hero";
 import { Seo } from "@/components/Seo";
+import { FirstSectionSkeleton } from "@/components/LoadingSkeletons";
 
 // Defer below-the-fold sections so the hero (LCP) ships first.
 const Categories = lazy(() => import("@/components/Categories").then((m) => ({ default: m.Categories })));
@@ -10,7 +11,7 @@ const PromoBanner = lazy(() => import("@/components/PromoBanner").then((m) => ({
 const Testimonials = lazy(() => import("@/components/Testimonials").then((m) => ({ default: m.Testimonials })));
 
 const SectionFallback = ({ h = "30vh" }: { h?: string }) => (
-  <div style={{ minHeight: h }} aria-hidden />
+  <div className="bg-background" style={{ minHeight: h }} aria-hidden />
 );
 
 const DeferredHomeSections = () => {
@@ -21,11 +22,11 @@ const DeferredHomeSections = () => {
     return () => window.clearTimeout(id);
   }, []);
 
-  if (!show) return null;
+  if (!show) return <FirstSectionSkeleton />;
 
   return (
     <>
-      <Suspense fallback={<SectionFallback h="40vh" />}>
+      <Suspense fallback={<FirstSectionSkeleton />}>
         <Categories />
       </Suspense>
       <Suspense fallback={<SectionFallback h="60vh" />}>
