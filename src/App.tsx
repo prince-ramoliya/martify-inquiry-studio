@@ -1,7 +1,7 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Layout } from "@/components/Layout";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { ErrorBoundary, NonCriticalErrorBoundary } from "@/components/ErrorBoundary";
 import { RouteSkeleton } from "@/components/LoadingSkeletons";
 import Index from "./pages/Index";
 
@@ -91,9 +91,11 @@ const DeferredToaster = () => {
 
   if (!show) return null;
   return (
-    <Suspense fallback={null}>
-      <Sonner />
-    </Suspense>
+    <NonCriticalErrorBoundary>
+      <Suspense fallback={null}>
+        <Sonner />
+      </Suspense>
+    </NonCriticalErrorBoundary>
   );
 };
 
