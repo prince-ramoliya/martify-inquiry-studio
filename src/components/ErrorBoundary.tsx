@@ -2,6 +2,8 @@ import { Component, type ReactNode } from "react";
 
 type Props = { children: ReactNode };
 type State = { hasError: boolean; isChunkError: boolean };
+type NonCriticalProps = { children: ReactNode; fallback?: ReactNode };
+type NonCriticalState = { hasError: boolean };
 
 const CHUNK_RELOAD_KEY = "__chunk_reload_at__";
 
@@ -67,5 +69,23 @@ export class ErrorBoundary extends Component<Props, State> {
         </div>
       </div>
     );
+  }
+}
+
+export class NonCriticalErrorBoundary extends Component<NonCriticalProps, NonCriticalState> {
+  state: NonCriticalState = { hasError: false };
+
+  static getDerivedStateFromError(): NonCriticalState {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: unknown) {
+    // eslint-disable-next-line no-console
+    console.warn("[NonCriticalErrorBoundary] Deferred section skipped", error);
+  }
+
+  render() {
+    if (this.state.hasError) return this.props.fallback ?? null;
+    return this.props.children;
   }
 }
