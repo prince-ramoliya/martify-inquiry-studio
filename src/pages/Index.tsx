@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import { Hero } from "@/components/Hero";
 import { Seo } from "@/components/Seo";
 import { FirstSectionSkeleton } from "@/components/LoadingSkeletons";
+import { NonCriticalErrorBoundary } from "@/components/ErrorBoundary";
 
 // Defer below-the-fold sections so the hero (LCP) ships first.
 const Categories = lazy(() => import("@/components/Categories").then((m) => ({ default: m.Categories })));
@@ -26,21 +27,31 @@ const DeferredHomeSections = () => {
 
   return (
     <>
-      <Suspense fallback={<FirstSectionSkeleton />}>
-        <Categories />
-      </Suspense>
-      <Suspense fallback={<SectionFallback h="60vh" />}>
-        <FeaturedProducts />
-      </Suspense>
-      <Suspense fallback={<SectionFallback />}>
-        <WhyChoose />
-      </Suspense>
-      <Suspense fallback={<SectionFallback />}>
-        <PromoBanner />
-      </Suspense>
-      <Suspense fallback={<SectionFallback />}>
-        <Testimonials />
-      </Suspense>
+      <NonCriticalErrorBoundary fallback={<FirstSectionSkeleton />}>
+        <Suspense fallback={<FirstSectionSkeleton />}>
+          <Categories />
+        </Suspense>
+      </NonCriticalErrorBoundary>
+      <NonCriticalErrorBoundary>
+        <Suspense fallback={<SectionFallback h="60vh" />}>
+          <FeaturedProducts />
+        </Suspense>
+      </NonCriticalErrorBoundary>
+      <NonCriticalErrorBoundary>
+        <Suspense fallback={<SectionFallback />}>
+          <WhyChoose />
+        </Suspense>
+      </NonCriticalErrorBoundary>
+      <NonCriticalErrorBoundary>
+        <Suspense fallback={<SectionFallback />}>
+          <PromoBanner />
+        </Suspense>
+      </NonCriticalErrorBoundary>
+      <NonCriticalErrorBoundary>
+        <Suspense fallback={<SectionFallback />}>
+          <Testimonials />
+        </Suspense>
+      </NonCriticalErrorBoundary>
     </>
   );
 };
