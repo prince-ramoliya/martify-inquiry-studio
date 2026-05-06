@@ -1,6 +1,8 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { Hero } from "@/components/Hero";
 import { Seo } from "@/components/Seo";
+import { FirstSectionSkeleton } from "@/components/LoadingSkeletons";
+import { NonCriticalErrorBoundary } from "@/components/ErrorBoundary";
 
 // Defer below-the-fold sections so the hero (LCP) ships first.
 const Categories = lazy(() => import("@/components/Categories").then((m) => ({ default: m.Categories })));
@@ -10,7 +12,7 @@ const PromoBanner = lazy(() => import("@/components/PromoBanner").then((m) => ({
 const Testimonials = lazy(() => import("@/components/Testimonials").then((m) => ({ default: m.Testimonials })));
 
 const SectionFallback = ({ h = "30vh" }: { h?: string }) => (
-  <div style={{ minHeight: h }} aria-hidden />
+  <div className="bg-background" style={{ minHeight: h }} aria-hidden />
 );
 
 const DeferredHomeSections = () => {
@@ -21,25 +23,35 @@ const DeferredHomeSections = () => {
     return () => window.clearTimeout(id);
   }, []);
 
-  if (!show) return null;
+  if (!show) return <FirstSectionSkeleton />;
 
   return (
     <>
-      <Suspense fallback={<SectionFallback h="40vh" />}>
-        <Categories />
-      </Suspense>
-      <Suspense fallback={<SectionFallback h="60vh" />}>
-        <FeaturedProducts />
-      </Suspense>
-      <Suspense fallback={<SectionFallback />}>
-        <WhyChoose />
-      </Suspense>
-      <Suspense fallback={<SectionFallback />}>
-        <PromoBanner />
-      </Suspense>
-      <Suspense fallback={<SectionFallback />}>
-        <Testimonials />
-      </Suspense>
+      <NonCriticalErrorBoundary fallback={<FirstSectionSkeleton />}>
+        <Suspense fallback={<FirstSectionSkeleton />}>
+          <Categories />
+        </Suspense>
+      </NonCriticalErrorBoundary>
+      <NonCriticalErrorBoundary>
+        <Suspense fallback={<SectionFallback h="60vh" />}>
+          <FeaturedProducts />
+        </Suspense>
+      </NonCriticalErrorBoundary>
+      <NonCriticalErrorBoundary>
+        <Suspense fallback={<SectionFallback />}>
+          <WhyChoose />
+        </Suspense>
+      </NonCriticalErrorBoundary>
+      <NonCriticalErrorBoundary>
+        <Suspense fallback={<SectionFallback />}>
+          <PromoBanner />
+        </Suspense>
+      </NonCriticalErrorBoundary>
+      <NonCriticalErrorBoundary>
+        <Suspense fallback={<SectionFallback />}>
+          <Testimonials />
+        </Suspense>
+      </NonCriticalErrorBoundary>
     </>
   );
 };
