@@ -142,7 +142,7 @@ export const Hero = () => {
                 src={shouldRender ? s.image : undefined}
                 alt={s.title}
                 loading={i === 0 ? "eager" : "lazy"}
-                fetchPriority={i === 0 ? "high" : "low"}
+                fetchpriority={i === 0 ? "high" : "low"}
                 decoding={i === 0 ? "sync" : "async"}
                 className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ease-out ${
                   i === index ? "opacity-100 scale-100" : "opacity-0 scale-105"
@@ -214,7 +214,7 @@ export const Hero = () => {
               src={shouldRender ? s.image : undefined}
               alt={s.title}
               loading={i === 0 ? "eager" : "lazy"}
-              fetchPriority={i === 0 ? "high" : "low"}
+              fetchpriority={i === 0 ? "high" : "low"}
               decoding={i === 0 ? "sync" : "async"}
               className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ease-out ${
                 i === index ? "opacity-100 scale-100" : "opacity-0 scale-105"
