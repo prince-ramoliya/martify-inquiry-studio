@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState, type ComponentType, type ReactNode } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { ErrorBoundary, NonCriticalErrorBoundary } from "@/components/ErrorBoundary";
@@ -8,7 +8,7 @@ import Index from "./pages/Index";
  * Wrap React.lazy with a small retry helper so transient network blips
  * (or stale chunks immediately after a deploy) don't blank the page.
  */
-const lazyWithRetry = <T extends { default: React.ComponentType<unknown> }>(
+const lazyWithRetry = <T extends { default: ComponentType<unknown> }>(
   factory: () => Promise<T>,
   retries = 2,
   delayMs = 400,
@@ -109,7 +109,7 @@ const PageLoadFallback = () => (
   </main>
 );
 
-const withPageFallback = (element: React.ReactNode) => (
+const withPageFallback = (element: ReactNode) => (
   <Suspense fallback={<PageLoadFallback />}>{element}</Suspense>
 );
 
