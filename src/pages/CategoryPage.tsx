@@ -76,7 +76,7 @@ const CategoryPage = () => {
             <div className="py-20 text-center text-muted-foreground">No products in this category yet.</div>
           ) : (
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
-              {items.map((p, i) => <ProductCard key={p.id} p={p} i={i} />)}
+              {items.map((p, i) => <ProductCard key={p.id} p={p} i={i} priority />)}
             </div>
           )}
         </div>
