@@ -24,7 +24,7 @@ export const ProductCard = ({ p, i = 0 }: { p: Product; i?: number }) => {
       className="group relative bg-card rounded-3xl overflow-hidden shadow-card hover-lift animate-fade-in-up"
       style={{ animationDelay: `${i * 50}ms` }}
     >
-      <Link to={`/product/${p.slug}`} className="block">
+      <Link to={`/product/${p.slug}`} className="block" aria-label={`View ${p.name}`}>
         <div className="relative aspect-square overflow-hidden bg-muted">
           <img
             ref={imgRef}
@@ -51,8 +51,10 @@ export const ProductCard = ({ p, i = 0 }: { p: Product; i?: number }) => {
             <Heart className={`w-4 h-4 ${wishHas ? "fill-current" : ""}`} />
           </button>
         </div>
+      </Link>
 
-        <div className="p-4 lg:p-5">
+      <div className="p-4 lg:p-5">
+        <Link to={`/product/${p.slug}`} className="block">
           <div className="text-xs text-muted-foreground mb-1">{p.category}</div>
           <h3 className="font-display font-semibold text-base leading-snug line-clamp-1">{p.name}</h3>
           <div className="mt-2 flex items-baseline gap-2">
@@ -61,32 +63,31 @@ export const ProductCard = ({ p, i = 0 }: { p: Product; i?: number }) => {
               <span className="text-xs text-muted-foreground line-through">{formatPrice(p.mrp)}</span>
             )}
           </div>
+        </Link>
 
-          {/* Blinkit-style ADD / stepper + inquiry */}
-          <div className="mt-3 flex items-stretch gap-2 w-full">
-            <div className="flex-1 min-w-0">
-              <AddToCartButton product={p} imageRef={imgRef} />
-            </div>
-            <a
-              href={buildProductInquiry(p)}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              aria-label="Send inquiry on WhatsApp"
-              className="shrink-0"
-            >
-              <Button
-                type="button"
-                variant="whatsapp"
-                size="icon"
-                className="h-9 w-9 rounded-xl"
-              >
-                <MessageCircle className="w-4 h-4" />
-              </Button>
-            </a>
+        {/* Blinkit-style ADD / stepper + inquiry */}
+        <div className="mt-3 flex items-stretch gap-2 w-full">
+          <div className="flex-1 min-w-0">
+            <AddToCartButton product={p} imageRef={imgRef} />
           </div>
+          <a
+            href={buildProductInquiry(p)}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Send inquiry on WhatsApp"
+            className="shrink-0"
+          >
+            <Button
+              type="button"
+              variant="whatsapp"
+              size="icon"
+              className="h-9 w-9 rounded-xl"
+            >
+              <MessageCircle className="w-4 h-4" />
+            </Button>
+          </a>
         </div>
-      </Link>
+      </div>
     </article>
   );
 };
