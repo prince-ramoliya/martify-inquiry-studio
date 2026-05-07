@@ -135,14 +135,13 @@ export const Hero = () => {
           onTouchStart={() => setPaused(true)}
         >
           {slides.map((s, i) => {
-            const shouldRender = i === 0 || i <= index + 1;
+            const shouldRender = i === index;
             return (
               <img
                 key={i}
                 src={shouldRender ? s.image : undefined}
                 alt={s.title}
-                loading={i === 0 ? "eager" : "lazy"}
-                fetchPriority={i === 0 ? "high" : "low"}
+                loading={i === index ? "eager" : "lazy"}
                 decoding={i === 0 ? "sync" : "async"}
                 className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ease-out ${
                   i === index ? "opacity-100 scale-100" : "opacity-0 scale-105"
@@ -205,16 +204,15 @@ export const Hero = () => {
       >
         {/* Slides */}
         {slides.map((s, i) => {
-          // Only render slides that have been or will soon be visible to avoid
-          // blocking the LCP with non-critical hero images.
-          const shouldRender = i === 0 || i <= index + 1;
+          // Only render the active slide during initial load; the next image
+          // can load after the carousel advances instead of competing with LCP.
+          const shouldRender = i === index;
           return (
             <img
               key={i}
               src={shouldRender ? s.image : undefined}
               alt={s.title}
-              loading={i === 0 ? "eager" : "lazy"}
-              fetchPriority={i === 0 ? "high" : "low"}
+              loading={i === index ? "eager" : "lazy"}
               decoding={i === 0 ? "sync" : "async"}
               className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ease-out ${
                 i === index ? "opacity-100 scale-100" : "opacity-0 scale-105"
