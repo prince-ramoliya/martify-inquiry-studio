@@ -2,7 +2,6 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { ErrorBoundary, NonCriticalErrorBoundary } from "@/components/ErrorBoundary";
-import { RouteSkeleton } from "@/components/LoadingSkeletons";
 import Index from "./pages/Index";
 
 /**
@@ -103,7 +102,7 @@ const AppShell = () => {
   useChunkErrorRecovery();
   return (
     <BrowserRouter>
-      <Suspense fallback={<RouteSkeleton />}>
+      <Suspense fallback={null}>
         <Routes>
           <Route path="/admin/*" element={<AdminRoutes />} />
           <Route element={<Layout />}>
