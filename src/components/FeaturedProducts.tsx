@@ -55,8 +55,8 @@ export const FeaturedProducts = () => {
           </div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
-            {featuredProducts.slice(0, 8).map((p, i) => (
-              <ProductCard key={p.id} p={p} i={i} />
+              {featuredProducts.slice(0, 8).map((p, i) => (
+                <ProductCard key={p.id} p={p} i={i} priority />
             ))}
           </div>
 
