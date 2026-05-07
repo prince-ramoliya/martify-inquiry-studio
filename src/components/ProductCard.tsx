@@ -7,10 +7,11 @@ import { AddToCartButton } from "./AddToCartButton";
 import { buildProductInquiry, formatPrice, type Product } from "@/data/products";
 import { useWishlist } from "@/store/cart";
 
-export const ProductCard = ({ p, i = 0 }: { p: Product; i?: number }) => {
+export const ProductCard = ({ p, i = 0, priority = false }: { p: Product; i?: number; priority?: boolean }) => {
   const imgRef = useRef<HTMLImageElement>(null);
   const wishHas = useWishlist((s) => s.ids.includes(p.id));
   const wishToggle = useWishlist((s) => s.toggle);
+  const eagerImage = priority && i < 4;
 
   const handleWish = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -30,7 +31,7 @@ export const ProductCard = ({ p, i = 0 }: { p: Product; i?: number }) => {
             ref={imgRef}
             src={p.image}
             alt={p.name}
-            loading={i < 4 ? "eager" : "lazy"}
+            loading={eagerImage ? "eager" : "lazy"}
             decoding="async"
             width={800}
             height={800}
