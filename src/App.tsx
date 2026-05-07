@@ -98,27 +98,40 @@ const DeferredToaster = () => {
   );
 };
 
+const PageLoadFallback = () => (
+  <main className="min-h-[55vh] bg-background flex items-center justify-center px-6">
+    <div className="text-center space-y-3">
+      <div className="mx-auto h-11 w-11 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-display font-black shadow-glow">
+        M
+      </div>
+      <p className="text-sm font-semibold text-foreground">Opening MARTIFY…</p>
+    </div>
+  </main>
+);
+
+const withPageFallback = (element: React.ReactNode) => (
+  <Suspense fallback={<PageLoadFallback />}>{element}</Suspense>
+);
+
 const AppShell = () => {
   useChunkErrorRecovery();
   return (
     <BrowserRouter>
-      <Suspense fallback={null}>
-        <Routes>
-          <Route path="/admin/*" element={<AdminRoutes />} />
-          <Route element={<Layout />}>
-            <Route path="/" element={<Index />} />
-            <Route path="/shop" element={<Shop />} />
-            <Route path="/category/:slug" element={<CategoryPage />} />
-            <Route path="/product/:slug" element={<ProductDetail />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/wishlist" element={<Wishlist />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/faq" element={<FAQ />} />
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
-      </Suspense>
+      <Routes>
+        <Route path="/admin/*" element={withPageFallback(<AdminRoutes />)} />
+        <Route element={<Layout />}>
+          <Route path="/" element={<Index />} />
+          <Route path="/shop" element={withPageFallback(<Shop />)} />
+          <Route path="/category/:slug" element={withPageFallback(<CategoryPage />)} />
+          <Route path="/product/:slug" element={withPageFallback(<ProductDetail />)} />
+          <Route path="/cart" element={withPageFallback(<Cart />)} />
+          <Route path="/wishlist" element={withPageFallback(<Wishlist />)} />
+          <Route path="/about" element={withPageFallback(<About />)} />
+          <Route path="/contact" element={withPageFallback(<Contact />)} />
+          <Route path="/faq" element={withPageFallback(<FAQ />)} />
+          <Route path="*" element={withPageFallback(<NotFound />)} />
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 };
