@@ -3,7 +3,7 @@ import { ArrowRight, Heart, Leaf, Sparkles, Users } from "lucide-react";
 import { PageHeader } from "@/components/PageHeader";
 import { Seo } from "@/components/Seo";
 import { Button } from "@/components/ui/button";
-import { categories } from "@/data/products";
+import { categories } from "@/data/catalog";
 import lifestyle from "@/assets/hero-lifestyle.webp";
 import secondary from "@/assets/hero-secondary.webp";
 
