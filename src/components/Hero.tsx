@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowRight, MessageCircle, Sparkles, Star, Truck, ShieldCheck } from "lucide-react";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
@@ -65,58 +65,12 @@ const marqueeItems = [
 ];
 
 export const Hero = () => {
-  const [dbSlides, setDbSlides] = useState<Slide[]>([]);
-  const [whatsappNumber, setWhatsappNumber] = useState<string | null>(null);
-  const slides: Slide[] = useMemo(() => {
-    if (dbSlides.length === 0) return fallbackSlides;
-    return dbSlides;
-  }, [dbSlides]);
+  const slides: Slide[] = fallbackSlides;
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const total = slides.length;
 
   useEffect(() => { if (index >= total) setIndex(0); }, [total, index]);
-
-  useEffect(() => {
-    let cancelled = false;
-    let idleId = 0;
-    let timerId: ReturnType<typeof setTimeout> | null = null;
-    const loadContent = async () => {
-      try {
-        const { supabase } = await import("@/integrations/supabase/client");
-        const [hero, settings] = await Promise.all([
-          supabase.from("hero_slides").select("eyebrow,title,italic,description,cta_label,cta_to,image_url,accent").eq("active", true).order("position", { ascending: true }),
-          supabase.from("site_settings").select("whatsapp_number").eq("id", 1).maybeSingle(),
-        ]);
-        if (cancelled) return;
-        if (hero.data?.length) {
-          setDbSlides(hero.data.map((s) => ({
-            eyebrow: s.eyebrow,
-            title: s.title,
-            italic: s.italic,
-            description: s.description,
-            cta: s.cta_label,
-            to: s.cta_to,
-            image: s.image_url,
-            accent: s.accent,
-          })));
-        }
-        if (settings.data?.whatsapp_number) setWhatsappNumber(settings.data.whatsapp_number);
-      } catch {
-        // Keep the fast static fallback if the backend is slow or unavailable.
-      }
-    };
-    if ("requestIdleCallback" in window) {
-      idleId = window.requestIdleCallback(loadContent, { timeout: 2500 });
-    } else {
-      timerId = setTimeout(loadContent, 1200);
-    }
-    return () => {
-      cancelled = true;
-      if ("cancelIdleCallback" in window) window.cancelIdleCallback(idleId);
-      if (timerId) clearTimeout(timerId);
-    };
-  }, []);
 
   useEffect(() => {
     if (paused) return;
@@ -263,7 +217,7 @@ export const Hero = () => {
                   </Button>
                 </Link>
                 <a
-                  href={whatsappNumber ? `https://wa.me/${whatsappNumber}?text=${encodeURIComponent("Hello, I'd like to know more.")}` : buildWhatsAppLink("Hello MARTIFY, I'd like to know more.")}
+                  href={buildWhatsAppLink("Hello MARTIFY, I'd like to know more.")}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full sm:w-auto"
