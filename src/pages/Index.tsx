@@ -19,12 +19,13 @@ const useAfterFirstPaint = () => {
 
   useEffect(() => {
     const run = () => setReady(true);
-    if ("requestIdleCallback" in window) {
-      const id = window.requestIdleCallback(run, { timeout: 1600 });
-      return () => window.cancelIdleCallback(id);
+    const w = globalThis.window;
+    if ("requestIdleCallback" in w) {
+      const id = w.requestIdleCallback(run, { timeout: 1600 });
+      return () => w.cancelIdleCallback(id);
     }
-    const id = window.setTimeout(run, 900);
-    return () => window.clearTimeout(id);
+    const id = globalThis.setTimeout(run, 900);
+    return () => globalThis.clearTimeout(id);
   }, []);
 
   return ready;
