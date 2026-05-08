@@ -13,7 +13,7 @@ export default defineConfig(({ mode }) => ({
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
   resolve: {
     alias: { "@": path.resolve(__dirname, "./src") },
-    dedupe: ["react", "react-dom", "react/jsx-runtime", "react/jsx-dev-runtime", "@tanstack/react-query", "@tanstack/query-core"],
+    dedupe: ["react", "react-dom", "react/jsx-runtime", "react/jsx-dev-runtime"],
   },
   build: {
     target: "es2020",
@@ -27,7 +27,6 @@ export default defineConfig(({ mode }) => ({
           if (!id.includes("node_modules")) return;
           if (id.includes("react-router")) return "router";
           if (id.includes("@supabase")) return "supabase";
-          if (id.includes("@tanstack")) return "query";
           if (id.includes("lucide-react")) return "icons";
           if (id.includes("@radix-ui")) return "radix";
           if (id.includes("recharts") || id.includes("d3-")) return "charts";

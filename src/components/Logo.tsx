@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import logoSrc from "@/assets/martify-logo.svg";
 
@@ -6,16 +5,8 @@ export const Logo = ({ variant = "default" }: { variant?: "default" | "light" })
   const isLight = variant === "light";
   const nav = useNavigate();
 
-  const clicks = useRef<number[]>([]);
   const onClick = (e: React.MouseEvent) => {
-    const now = Date.now();
-    clicks.current = [...clicks.current.filter((t) => now - t < 1200), now];
-    if (clicks.current.length >= 3) {
-      e.preventDefault();
-      clicks.current = [];
-      nav("/admin/login");
-      return;
-    }
+    e.preventDefault();
     nav("/");
   };
 

@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { Hero } from "@/components/Hero";
 import { Seo } from "@/components/Seo";
 import { Categories } from "@/components/Categories";
@@ -14,12 +14,34 @@ const SectionFallback = ({ h = "30vh" }: { h?: string }) => (
   <div className="bg-background" style={{ minHeight: h }} aria-hidden />
 );
 
+const useAfterFirstPaint = () => {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    const run = () => setReady(true);
+    const w = globalThis.window;
+    if ("requestIdleCallback" in w) {
+      const id = w.requestIdleCallback(run, { timeout: 1600 });
+      return () => w.cancelIdleCallback(id);
+    }
+    const id = globalThis.setTimeout(run, 900);
+    return () => globalThis.clearTimeout(id);
+  }, []);
+
+  return ready;
+};
+
 const DeferredHomeSections = () => {
+  const showBelowFold = useAfterFirstPaint();
+
   return (
     <>
       <NonCriticalErrorBoundary>
         <Categories />
       </NonCriticalErrorBoundary>
+      {!showBelowFold && <SectionFallback h="20vh" />}
+      {showBelowFold && (
+        <>
       <NonCriticalErrorBoundary>
         <Suspense fallback={<SectionFallback h="20vh" />}>
           <FeaturedProducts />
@@ -40,6 +62,8 @@ const DeferredHomeSections = () => {
           <Testimonials />
         </Suspense>
       </NonCriticalErrorBoundary>
+        </>
+      )}
     </>
   );
 };

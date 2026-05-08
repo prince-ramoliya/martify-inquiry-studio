@@ -36,7 +36,6 @@ const About = lazyWithRetry(() => import("./pages/About"));
 const Contact = lazyWithRetry(() => import("./pages/Contact"));
 const FAQ = lazyWithRetry(() => import("./pages/FAQ"));
 const NotFound = lazyWithRetry(() => import("./pages/NotFound"));
-const AdminRoutes = lazyWithRetry(() => import("./pages/admin/AdminRoutes"));
 const Sonner = lazyWithRetry(() => import("@/components/ui/sonner").then((m) => ({ default: () => <m.Toaster position="top-center" /> })));
 
 const useChunkErrorRecovery = () => {
@@ -118,7 +117,6 @@ const AppShell = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/admin/*" element={withPageFallback(<AdminRoutes />)} />
         <Route element={<Layout />}>
           <Route path="/" element={<Index />} />
           <Route path="/shop" element={withPageFallback(<Shop />)} />

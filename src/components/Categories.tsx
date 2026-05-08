@@ -1,6 +1,6 @@
 import { ArrowUpRight, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { categories } from "@/data/products";
+import { categories } from "@/data/catalog";
 
 export const Categories = () => {
   return (
