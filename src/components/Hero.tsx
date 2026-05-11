@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { ArrowRight, MessageCircle, Sparkles, Star, Truck, ShieldCheck } from "lucide-react";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
@@ -66,19 +65,8 @@ const marqueeItems = [
 
 export const Hero = () => {
   const slides: Slide[] = fallbackSlides;
-  const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const total = slides.length;
-
-  useEffect(() => { if (index >= total) setIndex(0); }, [total, index]);
-
-  useEffect(() => {
-    if (paused) return;
-    const t = setInterval(() => setIndex((i) => (i + 1) % total), 5000);
-    return () => clearInterval(t);
-  }, [paused, total]);
-
-  const current = slides[index];
+  const index = 0;
+  const current = slides[0];
 
   return (
     <section className="relative" aria-roledescription="carousel">
@@ -86,7 +74,6 @@ export const Hero = () => {
       <div className="md:hidden relative">
         <div
           className="relative w-full h-[42vh] min-h-[280px] max-h-[380px] overflow-hidden bg-foreground"
-          onTouchStart={() => setPaused(true)}
         >
           {slides.map((s, i) => {
             const shouldRender = i === index;
@@ -132,7 +119,6 @@ export const Hero = () => {
                     {slides.map((_, i) => (
                       <button
                         key={i}
-                        onClick={() => setIndex(i)}
                         aria-label={`Go to slide ${i + 1}`}
                         className={`h-1 rounded-full transition-all duration-500 ${
                           i === index ? "w-6 bg-primary-foreground" : "w-1.5 bg-primary-foreground/40"
@@ -152,9 +138,6 @@ export const Hero = () => {
       {/* Full-bleed banner */}
       <div
         className="relative w-full h-[78vh] min-h-[520px] max-h-[820px] overflow-hidden bg-foreground"
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
-        onTouchStart={() => setPaused(true)}
       >
         {/* Slides */}
         {slides.map((s, i) => {
@@ -178,20 +161,6 @@ export const Hero = () => {
         {/* Overlays for legibility */}
         <div className="absolute inset-0 bg-gradient-to-r from-foreground/85 via-foreground/55 to-foreground/20" />
         <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-transparent to-foreground/30 lg:bg-none" />
-
-        {/* Top bar */}
-        <div className="absolute top-0 inset-x-0 z-10">
-          <div className="container-page pt-5 sm:pt-7 flex items-center justify-between text-primary-foreground">
-            <div className="inline-flex items-center gap-2 text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em]">
-              <span className="w-6 sm:w-8 h-px bg-primary-foreground/70" />
-              Surat · Est. 2019
-            </div>
-            <div className="hidden sm:inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full glass-dark">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-xs font-semibold">Open today · 9 AM – 10 PM</span>
-            </div>
-          </div>
-        </div>
 
         {/* Content */}
         <div className="absolute inset-0 z-10 flex items-end lg:items-center">
@@ -238,7 +207,6 @@ export const Hero = () => {
                   {slides.map((_, i) => (
                     <button
                       key={i}
-                      onClick={() => setIndex(i)}
                       aria-label={`Go to slide ${i + 1}`}
                       className={`h-1.5 rounded-full transition-all duration-500 ${
                         i === index
@@ -249,7 +217,7 @@ export const Hero = () => {
                   ))}
                 </div>
                 <span className="text-xs font-grotesk font-medium text-primary-foreground/70 tabular-nums">
-                  {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+                  01 / {String(slides.length).padStart(2, "0")}
                 </span>
               </div>
             </div>
