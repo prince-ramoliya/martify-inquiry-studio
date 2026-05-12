@@ -16,7 +16,7 @@ import { Toaster } from "@/components/ui/sonner";
 
 const AppShell = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Index />} />
