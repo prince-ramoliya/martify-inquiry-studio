@@ -75,21 +75,16 @@ export const Hero = () => {
         <div
           className="relative w-full h-[42vh] min-h-[280px] max-h-[380px] overflow-hidden bg-foreground"
         >
-          {slides.map((s, i) => {
-            const shouldRender = i === index;
-            return (
-              <img
-                key={i}
-                src={shouldRender ? s.image : undefined}
-                alt={s.title}
-                loading={i === index ? "eager" : "lazy"}
-                decoding={i === 0 ? "sync" : "async"}
-                className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ease-out ${
-                  i === index ? "opacity-100 scale-100" : "opacity-0 scale-105"
-                }`}
-              />
-            );
-          })}
+          <img
+            src={current.image}
+            alt={current.title}
+            loading="eager"
+            fetchPriority="high"
+            decoding="sync"
+            width={1600}
+            height={900}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
 
           {/* Single soft overlay for legibility */}
           <div className="absolute inset-0 bg-gradient-to-t from-foreground/75 via-foreground/30 to-transparent" />
@@ -139,24 +134,16 @@ export const Hero = () => {
       <div
         className="relative w-full h-[78vh] min-h-[520px] max-h-[820px] overflow-hidden bg-foreground"
       >
-        {/* Slides */}
-        {slides.map((s, i) => {
-          // Only render the active slide during initial load; the next image
-          // can load after the carousel advances instead of competing with LCP.
-          const shouldRender = i === index;
-          return (
-            <img
-              key={i}
-              src={shouldRender ? s.image : undefined}
-              alt={s.title}
-              loading={i === index ? "eager" : "lazy"}
-              decoding={i === 0 ? "sync" : "async"}
-              className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ease-out ${
-                i === index ? "opacity-100 scale-100" : "opacity-0 scale-105"
-              }`}
-            />
-          );
-        })}
+        <img
+          src={current.image}
+          alt={current.title}
+          loading="eager"
+          fetchPriority="high"
+          decoding="sync"
+          width={1600}
+          height={900}
+          className="absolute inset-0 w-full h-full object-cover"
+        />
 
         {/* Overlays for legibility */}
         <div className="absolute inset-0 bg-gradient-to-r from-foreground/85 via-foreground/55 to-foreground/20" />
