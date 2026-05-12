@@ -7,7 +7,7 @@ import { WhyChoose } from "@/components/WhyChoose";
 import { PromoBanner } from "@/components/PromoBanner";
 import { Testimonials } from "@/components/Testimonials";
 
-const DeferredHomeSections = () => {
+const StaticHomeSections = () => {
   return (
     <>
       <NonCriticalErrorBoundary>
@@ -36,7 +36,7 @@ const Index = () => (
       description="Curated supermarket from Surat — beauty, kitchen, decor, electronics, stationary, toys. Browse, save & inquire on WhatsApp."
     />
     <Hero />
-    <DeferredHomeSections />
+    <StaticHomeSections />
   </>
 );
 

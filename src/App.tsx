@@ -10,12 +10,13 @@ import Wishlist from "./pages/Wishlist";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import FAQ from "./pages/FAQ";
+import Policies from "./pages/Policies";
 import NotFound from "./pages/NotFound";
 import { Toaster } from "@/components/ui/sonner";
 
 const AppShell = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Index />} />
@@ -27,6 +28,9 @@ const AppShell = () => {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route path="/policies" element={<Policies />} />
+          <Route path="/privacy" element={<Policies />} />
+          <Route path="/terms" element={<Policies />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

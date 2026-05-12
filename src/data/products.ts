@@ -46,6 +46,8 @@ const productImages: Record<string, string> = {
   p31, p32, p33, p34, p35, p36, p37, p38,
 };
 
+const deterministicReviews = (id: string) => 42 + Number(id.replace(/\D/g, "")) * 7;
+
 export { categories, type Category } from "./catalog";
 export { WHATSAPP_NUMBER, buildCartInquiry, buildProductInquiry, buildWhatsAppLink, formatPrice } from "./commerce";
 
@@ -87,7 +89,7 @@ const make = (
     price,
     mrp: opts.mrp ?? Math.round(price * 1.25),
     rating: opts.rating ?? 4.5,
-    reviewCount: opts.reviewCount ?? Math.floor(Math.random() * 200) + 30,
+    reviewCount: opts.reviewCount ?? deterministicReviews(id),
     shortDescription: opts.shortDescription ?? `Premium ${cat.name.toLowerCase()} pick — quality you can feel.`,
     description:
       opts.description ??
