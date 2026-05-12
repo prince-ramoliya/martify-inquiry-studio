@@ -79,7 +79,7 @@ export const Hero = () => {
             src={current.image}
             alt={current.title}
             loading="eager"
-            fetchPriority="high"
+            {...{ fetchpriority: "high" }}
             decoding="sync"
             width={1600}
             height={900}
@@ -138,7 +138,7 @@ export const Hero = () => {
           src={current.image}
           alt={current.title}
           loading="eager"
-          fetchPriority="high"
+          {...{ fetchpriority: "high" }}
           decoding="sync"
           width={1600}
           height={900}
