@@ -13,6 +13,7 @@ import FAQ from "./pages/FAQ";
 import Policies from "./pages/Policies";
 import NotFound from "./pages/NotFound";
 import { Toaster } from "@/components/ui/sonner";
+import { Diagnostics } from "@/components/Diagnostics";
 
 const AppShell = () => {
   return (
@@ -34,6 +35,7 @@ const AppShell = () => {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
+      <Diagnostics />
     </BrowserRouter>
   );
 };
