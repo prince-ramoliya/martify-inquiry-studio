@@ -85,7 +85,7 @@ export const ProductCard = ({ p, i = 0, priority = false }: { p: Product; i?: nu
               size="icon"
               className="h-9 w-9 rounded-xl"
             >
-              <MessageCircle className="w-4 h-4" />
+              <WhatsAppIcon className="w-4 h-4" />
             </Button>
           </a>
         </div>
