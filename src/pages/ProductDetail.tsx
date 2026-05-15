@@ -206,8 +206,6 @@ const ProductDetail = () => {
                     <Share2 />
                   </Button>
                 </div>
-                {/* Bulk order inquiry */}
-                <BulkOrderInquiry product={product} />
               </div>
 
               <div className="grid grid-cols-3 gap-3 pt-4 border-t border-border">
