@@ -28,19 +28,10 @@ export default defineConfig(({ mode }) => ({
     chunkSizeWarningLimit: 900,
     rollupOptions: {
       output: {
-        // Cache-busting: hash every asset filename so phones never use a stale chunk.
+        // Cache-busting: hash every built asset filename so phones never use stale files.
         entryFileNames: `assets/[name]-[hash].js`,
         chunkFileNames: `assets/[name]-[hash].js`,
         assetFileNames: `assets/[name]-[hash].[ext]`,
-        manualChunks(id) {
-          if (!id.includes("node_modules")) return;
-          if (id.includes("react-router")) return "router";
-          if (id.includes("lucide-react")) return "icons";
-          if (id.includes("@radix-ui")) return "radix";
-          if (id.includes("recharts") || id.includes("d3-")) return "charts";
-          if (id.includes("react-dom") || id.includes("/react/")) return "react";
-          return "vendor";
-        },
       },
     },
   },
