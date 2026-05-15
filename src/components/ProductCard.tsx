@@ -1,4 +1,5 @@
-import { Heart, MessageCircle } from "lucide-react";
+import { Heart } from "lucide-react";
+import { WhatsAppIcon } from "./icons/WhatsAppIcon";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
