@@ -2,8 +2,6 @@ import { ArrowRight, MessageCircle, Sparkles, Star, Truck, ShieldCheck } from "l
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
 import banner1 from "@/assets/hero-banner-1.webp";
-import banner2 from "@/assets/hero-banner-2.webp";
-import banner3 from "@/assets/hero-banner-3.webp";
 import { buildWhatsAppLink } from "@/data/commerce";
 
 type Slide = {
@@ -28,28 +26,6 @@ const fallbackSlides: Slide[] = [
     to: "/shop",
     image: banner1,
     accent: "Featured Edit",
-  },
-  {
-    eyebrow: "Festive Sale · Limited Time",
-    title: "Up to 30% off",
-    italic: "festive home essentials.",
-    description:
-      "Hand-picked kitchen, decor and lifestyle pieces — only while stocks last at the Surat store.",
-    cta: "Shop the edit",
-    to: "/shop",
-    image: banner2,
-    accent: "Save 30%",
-  },
-  {
-    eyebrow: "New In · Beauty",
-    title: "Glow, naturally.",
-    italic: "Skincare you'll repurchase.",
-    description:
-      "Curated beauty & personal care from brands our customers actually love and come back for.",
-    cta: "Explore beauty",
-    to: "/category/beauty-care",
-    image: banner3,
-    accent: "Bestsellers",
   },
 ];
 
