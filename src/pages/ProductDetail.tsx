@@ -220,6 +220,28 @@ const ProductDetail = () => {
                   </div>
                 ))}
               </div>
+
+              {/* Bulk / reseller inquiry — subtle entry point */}
+              <BulkOrderInquiry
+                product={product}
+                trigger={
+                  <button
+                    type="button"
+                    className="w-full flex items-center justify-between gap-3 rounded-2xl border border-dashed border-primary/40 bg-accent/30 hover:bg-accent/60 transition-smooth px-4 py-3 text-left"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                        <Package className="w-4 h-4" />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="font-display font-semibold text-sm">Buying in bulk or reselling?</div>
+                        <div className="text-xs text-muted-foreground">Get wholesale pricing &amp; MOQ</div>
+                      </div>
+                    </div>
+                    <span className="text-xs font-semibold text-primary whitespace-nowrap">Request quote →</span>
+                  </button>
+                }
+              />
             </div>
           </div>
         </div>
