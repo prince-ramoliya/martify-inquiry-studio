@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Minus, MessageCircle, Plus, ShoppingBag, Trash2 } from "lucide-react";
+import { ArrowRight, Minus, Plus, ShoppingBag, Trash2 } from "lucide-react";
+import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { PageHeader } from "@/components/PageHeader";
 import { Seo } from "@/components/Seo";
 import { Button } from "@/components/ui/button";
