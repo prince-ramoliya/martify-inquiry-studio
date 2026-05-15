@@ -159,8 +159,6 @@ const ProductDetail = () => {
                     <WhatsAppIcon className="w-5 h-5" /> Send Inquiry on WhatsApp
                   </Button>
                 </a>
-                {/* Bulk order */}
-                <BulkOrderInquiry product={product} />
               </div>
 
               {/* === DESKTOP buttons === */}
