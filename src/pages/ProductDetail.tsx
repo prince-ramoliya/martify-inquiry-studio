@@ -192,7 +192,7 @@ const ProductDetail = () => {
                   </Button>
                   <a href={buildProductInquiry(product)} target="_blank" rel="noopener noreferrer" className="contents">
                     <Button variant="whatsapp" size="xl" className="w-full">
-                      <MessageCircle /> Send Inquiry
+                      <WhatsAppIcon className="w-5 h-5" /> Send Inquiry
                     </Button>
                   </a>
                   <Button
@@ -208,6 +208,8 @@ const ProductDetail = () => {
                     <Share2 />
                   </Button>
                 </div>
+                {/* Bulk order inquiry */}
+                <BulkOrderInquiry product={product} />
               </div>
 
               <div className="grid grid-cols-3 gap-3 pt-4 border-t border-border">
