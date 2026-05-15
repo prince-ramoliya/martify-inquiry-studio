@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Check, Heart, Minus, Plus, Share2, ShoppingCart, Star, Truck, ShieldCheck, RotateCw } from "lucide-react";
+import { Check, Heart, Minus, Package, Plus, Share2, ShoppingCart, Star, Truck, ShieldCheck, RotateCw } from "lucide-react";
 import { toast } from "sonner";
 import { PageHeader } from "@/components/PageHeader";
 import { ProductCard } from "@/components/ProductCard";
