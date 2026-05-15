@@ -68,9 +68,11 @@ export const BulkOrderInquiry = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="xl" className="w-full">
-          <Package /> Bulk Order Inquiry
-        </Button>
+        {trigger ?? (
+          <Button variant="outline" size="xl" className="w-full">
+            <Package /> Bulk Order Inquiry
+          </Button>
+        )}
       </DialogTrigger>
       <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
         <DialogHeader>
