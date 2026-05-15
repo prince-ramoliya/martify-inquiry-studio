@@ -99,9 +99,10 @@ const Cart = () => {
                     href={buildCartInquiry(items.map((i) => ({ name: i.name, qty: i.qty, price: i.price })))}
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="block pt-2"
                   >
                     <Button variant="whatsapp" size="lg" className="w-full">
-                      <MessageCircle /> Send WhatsApp Inquiry
+                      <WhatsAppIcon className="w-5 h-5" /> Send WhatsApp Inquiry
                     </Button>
                   </a>
                   <p className="text-xs text-muted-foreground text-center">
