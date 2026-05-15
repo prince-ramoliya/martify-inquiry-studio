@@ -1,4 +1,5 @@
-import { Heart, MessageCircle } from "lucide-react";
+import { Heart } from "lucide-react";
+import { WhatsAppIcon } from "./icons/WhatsAppIcon";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
@@ -84,7 +85,7 @@ export const ProductCard = ({ p, i = 0, priority = false }: { p: Product; i?: nu
               size="icon"
               className="h-9 w-9 rounded-xl"
             >
-              <MessageCircle className="w-4 h-4" />
+              <WhatsAppIcon className="w-4 h-4" />
             </Button>
           </a>
         </div>

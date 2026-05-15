@@ -1,11 +1,13 @@
 import { useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Check, Heart, Minus, MessageCircle, Plus, Share2, ShoppingCart, Star, Truck, ShieldCheck, RotateCw } from "lucide-react";
+import { Check, Heart, Minus, Plus, Share2, ShoppingCart, Star, Truck, ShieldCheck, RotateCw } from "lucide-react";
 import { toast } from "sonner";
 import { PageHeader } from "@/components/PageHeader";
 import { ProductCard } from "@/components/ProductCard";
 import { Seo } from "@/components/Seo";
 import { Button } from "@/components/ui/button";
+import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
+import { BulkOrderInquiry } from "@/components/BulkOrderInquiry";
 import { buildProductInquiry, formatPrice, getProduct, productsByCategory } from "@/data/products";
 import { useCart, useWishlist } from "@/store/cart";
 import { flyToCart } from "@/lib/flyToCart";
@@ -154,9 +156,11 @@ const ProductDetail = () => {
                 {/* Secondary CTA */}
                 <a href={buildProductInquiry(product)} target="_blank" rel="noopener noreferrer" className="block">
                   <Button variant="whatsapp" size="xl" className="w-full">
-                    <MessageCircle /> Send Inquiry on WhatsApp
+                    <WhatsAppIcon className="w-5 h-5" /> Send Inquiry on WhatsApp
                   </Button>
                 </a>
+                {/* Bulk order */}
+                <BulkOrderInquiry product={product} />
               </div>
 
               {/* === DESKTOP buttons === */}
@@ -188,7 +192,7 @@ const ProductDetail = () => {
                   </Button>
                   <a href={buildProductInquiry(product)} target="_blank" rel="noopener noreferrer" className="contents">
                     <Button variant="whatsapp" size="xl" className="w-full">
-                      <MessageCircle /> Send Inquiry
+                      <WhatsAppIcon className="w-5 h-5" /> Send Inquiry
                     </Button>
                   </a>
                   <Button
@@ -204,6 +208,8 @@ const ProductDetail = () => {
                     <Share2 />
                   </Button>
                 </div>
+                {/* Bulk order inquiry */}
+                <BulkOrderInquiry product={product} />
               </div>
 
               <div className="grid grid-cols-3 gap-3 pt-4 border-t border-border">

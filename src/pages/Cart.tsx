@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Minus, MessageCircle, Plus, ShoppingBag, Trash2 } from "lucide-react";
+import { ArrowRight, Minus, Plus, ShoppingBag, Trash2 } from "lucide-react";
+import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { PageHeader } from "@/components/PageHeader";
 import { Seo } from "@/components/Seo";
 import { Button } from "@/components/ui/button";
@@ -98,9 +99,10 @@ const Cart = () => {
                     href={buildCartInquiry(items.map((i) => ({ name: i.name, qty: i.qty, price: i.price })))}
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="block pt-2"
                   >
                     <Button variant="whatsapp" size="lg" className="w-full">
-                      <MessageCircle /> Send WhatsApp Inquiry
+                      <WhatsAppIcon className="w-5 h-5" /> Send WhatsApp Inquiry
                     </Button>
                   </a>
                   <p className="text-xs text-muted-foreground text-center">
