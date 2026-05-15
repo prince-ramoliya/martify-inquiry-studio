@@ -19,7 +19,13 @@ import { toast } from "sonner";
 
 const QTY_PRESETS = [10, 25, 50, 100, 250, 500];
 
-export const BulkOrderInquiry = ({ product }: { product: Product }) => {
+export const BulkOrderInquiry = ({
+  product,
+  trigger,
+}: {
+  product: Product;
+  trigger?: React.ReactNode;
+}) => {
   const [open, setOpen] = useState(false);
   const [qty, setQty] = useState<number>(50);
   const [name, setName] = useState("");
@@ -62,9 +68,11 @@ export const BulkOrderInquiry = ({ product }: { product: Product }) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="xl" className="w-full">
-          <Package /> Bulk Order Inquiry
-        </Button>
+        {trigger ?? (
+          <Button variant="outline" size="xl" className="w-full">
+            <Package /> Bulk Order Inquiry
+          </Button>
+        )}
       </DialogTrigger>
       <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
         <DialogHeader>
