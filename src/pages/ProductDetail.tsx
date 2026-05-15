@@ -156,9 +156,11 @@ const ProductDetail = () => {
                 {/* Secondary CTA */}
                 <a href={buildProductInquiry(product)} target="_blank" rel="noopener noreferrer" className="block">
                   <Button variant="whatsapp" size="xl" className="w-full">
-                    <MessageCircle /> Send Inquiry on WhatsApp
+                    <WhatsAppIcon className="w-5 h-5" /> Send Inquiry on WhatsApp
                   </Button>
                 </a>
+                {/* Bulk order */}
+                <BulkOrderInquiry product={product} />
               </div>
 
               {/* === DESKTOP buttons === */}
